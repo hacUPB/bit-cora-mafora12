@@ -34,3 +34,28 @@ ACTIVIDAD 3
     PC: Almacena la direccion de memoria de la siguiente linea que se ejecutara
     A: Direcciones que dependen de la instrucción (si es RAM o ROM)
     D: Guarda datos temporalmente que seran usados por la CPU
+
+
+Actividad 5
+
+Que es una variable?
+Espacio de memoria donde se almacenan datos temporalmente en la ejecución del programa.
+Carac:
+- nombre de la variable
+- dirección de memoria
+- contenido 
+i=1
+sum=0
+sum=sum+i
+i=i+1
+
+@i
+M=
+@sum 
+M=0
+@i
+D=M
+@sum
+M=D+M
+
+Solo se puede poner los numeros 1, 0, -1 en el lenguaje
