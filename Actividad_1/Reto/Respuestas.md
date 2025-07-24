@@ -62,3 +62,190 @@ Basicamente:
     "i" es una variable de datos almacenada en la memoria RAM que se modifica durante la ejecución del programa. 
     "cont" es una etiqueta del codigo, almacenada en la ROM que se usa para saber donde debe continuar cuando se termine el bucle.
 
+
+// Punto 16
+
+- ¿Qué hace este programa?  
+    
+    Suma todos los valores del arreglo "arr" y guarda el resultado en la variable "sum".
+    
+- ¿Cuál es la dirección base de arr en la memoria RAM?
+    
+    Al ser una variable no asignada el lenguaje ensamblador automaticamente la empieza a asignar desde la dirección de la RAM[16], y como arr tiene 10 posiciones va desde RAM[16], hasta RAM[25]
+    
+- ¿Cuál es la dirección base de sum en la memoria RAM y por qué? 
+
+    Como la variable "arr" ocupa las direccipnes desde la RAM[16], hasta RAM[25], la variable "sum" ocupa la siguiente dirección disponible, osea la dirección RAM[26]
+    
+- ¿Cuál es la dirección base de j en la memoria RAM y por qué?  
+
+    Esta variable usada en el ciclo for "j" también es una variable simbolica, por lo tanto se guarda en la proxima dirección disponible, así:  
+        - "arr": RAM[16]-RAM[25]  
+        - "sum": RAM[26]  
+
+    Por lo tanto "j" esta en la dirección RAM[27].  
+
+
+//Punto 18
+(draw)
+	// put bitmap location value in R12
+	// put code return address in R13
+	@SCREEN
+	D=A
+	@R12
+	AD=D+M
+	// row 1
+	@4 // A holds val
+	D=D+A // D = addr + val
+	A=D-A // A=addr + val - val = addr
+	M=D-A // RAM[addr] = val
+	// row 2
+	D=A // D holds previous addr
+	@32
+	AD=D+A
+	@4 // A holds val
+	D=D+A // D = addr + val
+	A=D-A // A=addr + val - val = addr
+	M=D-A // RAM[addr] = val
+	// row 3
+	D=A // D holds previous addr
+	@32
+	AD=D+A
+	@31 // A holds val
+	D=D+A // D = addr + val
+	A=D-A // A=addr + val - val = addr
+	M=D-A // RAM[addr] = val
+	// row 4
+	D=A // D holds previous addr
+	@32
+	AD=D+A
+	@68 // A holds val
+	D=D+A // D = addr + val
+	A=D-A // A=addr + val - val = addr
+	M=D-A // RAM[addr] = val
+	// row 5
+	D=A // D holds previous addr
+	@32
+	AD=D+A
+	@4 // A holds val
+	D=D+A // D = addr + val
+	A=D-A // A=addr + val - val = addr
+	M=D-A // RAM[addr] = val
+	// row 6
+	D=A // D holds previous addr
+	@32
+	AD=D+A
+	@15600 // A holds val
+	D=D+A // D = addr + val
+	A=D-A // A=addr + val - val = addr
+	M=D-A // RAM[addr] = val
+	// row 7
+	D=A // D holds previous addr
+	@32
+	AD=D+A
+	@17800 // A holds val
+	D=D+A // D = addr + val
+	A=D-A // A=addr + val - val = addr
+	M=D-A // RAM[addr] = val
+	// row 8
+	D=A // D holds previous addr
+	@32
+	AD=D+A
+	@16904 // A holds val
+	D=D+A // D = addr + val
+	A=D-A // A=addr + val - val = addr
+	M=D-A // RAM[addr] = val
+	// row 9
+	D=A // D holds previous addr
+	@32
+	AD=D+A
+	@16392 // A holds val
+	D=D+A // D = addr + val
+	A=D-A // A=addr + val - val = addr
+	M=D-A // RAM[addr] = val
+	// row 10
+	D=A // D holds previous addr
+	@32
+	AD=D+A
+	@24600 // A holds val
+	D=D+A // D = addr + val
+	A=D-A // A=addr + val - val = addr
+	M=D-A // RAM[addr] = val
+	// row 11
+	D=A // D holds previous addr
+	@32
+	AD=D+A
+	@12336 // A holds val
+	D=D+A // D = addr + val
+	A=D-A // A=addr + val - val = addr
+	M=D-A // RAM[addr] = val
+	AD=A+1 // D holds addr
+	@2 // A holds val
+	D=D+A // D = addr + val
+	A=D-A // A=addr + val - val = addr
+	M=D-A // RAM[addr] = val
+	// row 12
+	D=A // D holds previous addr
+	@31
+	AD=D+A
+	@6368 // A holds val
+	D=D+A // D = addr + val
+	A=D-A // A=addr + val - val = addr
+	M=D-A // RAM[addr] = val
+	// row 13
+	D=A // D holds previous addr
+	@32
+	AD=D+A
+	@28798 // A holds val
+	D=D+A // D = addr + val
+	A=D-A // A=addr + val - val = addr
+	M=A-D // RAM[addr]=-val
+	// row 14
+	D=A // D holds previous addr
+	@32
+	AD=D+A
+	@14848 // A holds val
+	D=D+A // D = addr + val
+	A=D-A // A=addr + val - val = addr
+	M=A-D // RAM[addr]=-val
+	AD=A+1 // D holds addr
+	M=1
+	// row 15
+	D=A // D holds previous addr
+	@31
+	AD=D+A
+	@32752 // A holds val
+	D=D+A // D = addr + val
+	A=D-A // A=addr + val - val = addr
+	M=A-D // RAM[addr]=-val
+	// row 16
+	D=A // D holds previous addr
+	@32
+	AD=D+A
+	@56 // A holds val
+	D=D+A // D = addr + val
+	A=D-A // A=addr + val - val = addr
+	M=D-A // RAM[addr] = val
+	// row 17
+	D=A // D holds previous addr
+	@32
+	AD=D+A
+	@16 // A holds val
+	D=D+A // D = addr + val
+	A=D-A // A=addr + val - val = addr
+	M=D-A // RAM[addr] = val
+	// return
+	@R13
+	A=M
+	D;JMP
+    ![Bitmap](image.png)
+
+//Punto 19
+Este programa utiliza el valor 16384 en la dirección RAM[16] que se usa como un indicador para saber en que parte de la memoria se va a escribir o se va a borrar.
+Luego el programa revisa si se esta presionando alguna tecla leyendo la entrada del teclado que esta en la dirección @24576. Si no se esta presionando nada (osea e valor es 0), se borra escribiendo un 0 en la posición anterior a 16384, retrocediendo el indicador y eliminando lo que se habia escrito antes 
+Por otra parte si, si presiona una tecla, compara el valor del teclado con la posición actual del indicador. Si el indicador aún no ha llegado al valor del taclado, escribe -1 en esa posición de memoria y avanza el indicador. Si lo supera no hace nnada más y entra en un bucle.
+En resumen cuando no se presiona nada, borra lo que había, y cuando se presiona una tecla, escribe -1 desde la dirección 16384 hasta llegar al valor del teclado. Es como si se tratara de una barra que se llena o se vacía según la lo que se presione en el teclado.
+
+//Punto 20
+![Dibujo_bitmap](image-1.png)
+

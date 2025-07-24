@@ -61,7 +61,79 @@ D=D+M
 @R1 
 M=D
 
-// Punto 12
+// Punto 12  
+
+@R1
+D=M
+@R2 
+D=D+M
+@69
+D=D+A
+@R4 
+M=D
+
+//Punto 13  
+
+@R0 
+D=M
+@POS
+D;JGE
+@R1 
+M=-1
+@LOOP
+0;JMP 
+
+(POS)
+@R1
+M=1
+
+(LOOP)
+@LOOP 
+0;JMP
+
+
+//Punto 14
+
+@R1 
+A=M
+D=M
+@R4 
+M=D
+
+// Punto 15
+
+@R0
+D=M
+@i 
+M=D
+
+(LOOP)
+@R1 
+D=M
+@i 
+D=D-M
+@END 
+D;JEQ
+
+@i 
+A=M
+M=-1
+
+@i 
+M=M+1
+@LOOP
+0;JMP
+(END)
+
+// Punto 17
+
+@7 
+D=D-A
+@69
+D;JEQ
+
+
+
 
 
 
