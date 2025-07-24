@@ -1,12 +1,9 @@
-@0
-D=A
-@sum
-M=D
 
-@0
-D=A
+@sum
+M=0
+
 @j
-M=D
+M=0
 
 (LOOP_START)
 @j
