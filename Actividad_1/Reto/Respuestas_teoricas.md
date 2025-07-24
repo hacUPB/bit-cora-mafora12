@@ -1,4 +1,3 @@
-Respuestas teoricas de los puntos 8 y 9
 
 //Punto 8
 
