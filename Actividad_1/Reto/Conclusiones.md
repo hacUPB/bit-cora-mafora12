@@ -10,8 +10,7 @@ Al ser un tema casi nuevo, que se acababa de explicar en clase al principio fue 
 
 Puntos del 12-17  
 
-Me di cuenta de que todavía hay muchas cosas que me cuestan en el lenguaje ensamblador y cómo funciona toda esta lógica de bajo nivel. Al principio, me sentía un poco perdida porque cada línea me parecía muy abstracta o confusa, especialmente cuando tenía que imaginarme qué estaba haciendo cada instrucción dentro de la memoria, y más de los ejercicios que trataban de pasar un lenguaje a otro como los puntos 16 y 17; pero conforme fui leyendo el documeto e investigando un poco más,fue un poco más sencillo de entender y realizar aunque todavia me cueste.
-
+Me di cuenta de que todavía hay muchas cosas que me cuestan en el lenguaje ensamblador y cómo funciona toda esta lógica de bajo nivel. Al principio, me sentía un poco perdida porque cada línea me parecía muy abstracta o confusa, especialmente cuando tenía que imaginarme qué estaba haciendo cada instrucción dentro de la memoria, y más de los ejercicios que trataban de pasar un lenguaje a otro como los puntos 16 y 17; pero conforme fui leyendo el documeto e investigando un poco más,fue un poco más entendible de hacer pero sigue siendo un poco confusas algunas lineas. 
 
 Punto 18  
 
