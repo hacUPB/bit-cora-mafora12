@@ -1,18 +1,28 @@
+
 (LOOP)
-  @KBD // KBD:24576
-  D=M  // registro guardadao en D       
-  @100 // teclado en D
-  D=D-A       
+  @KBD
+  D=M          // Leer la tecla presionada
+  @100
+  D=D-A
   @DRAW
-  D;JEQ       
+  D;JEQ        // Si D = 0 → tecla 'd' → dibujar
+
+  @KBD
+  D=M
+  @0
+  D=D-A
+  @CLEAR
+  D;JEQ        // Si D = 0 → ninguna tecla → borrar
+
   @LOOP
-  0;JMP      
+  0;JMP        // Si otra tecla → volver al loop
 
 (DRAW)
   @SCREEN
   D=A
   @R12
   AD=D+M
+
   // row 1
   @4
   D=D+A
@@ -155,5 +165,38 @@
   M=D-A
 
   @LOOP
-  0;JMP       
-  
+  0;JMP
+
+
+(CLEAR)
+  @SCREEN
+  D=A
+  @R13
+  M=D          // R13 = inicio pantalla (16384)
+
+  @24576
+  D=A
+  @R14
+  M=D          // R14 = final pantalla
+
+(CLEAR_LOOP)
+  @R13
+  A=M
+  M=0          // Apaga píxel actual
+
+  @R13
+  M=M+1        // Avanza al siguiente
+
+  @R14
+  D=M
+  @R13
+  D=D-M        // ¿Llegamos al final?
+
+  @CLEAR_LOOP
+  D;JGT        // Si no, sigue borrando
+
+  @LOOP
+  0;JMP
+
+
+ 

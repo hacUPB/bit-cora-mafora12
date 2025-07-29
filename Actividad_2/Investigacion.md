@@ -12,3 +12,5 @@ se implementa asignando posiciones fijas de memoria a la pantalla y al teclado. 
 - El teclado está conectado a la dirección 24576. Cuando se presiona una tecla, el código de la tecla aparece en esa dirección.  
 
 Entonces, si uno quiere dibujar algo, simplemente escribe valores binarios en la memoria desde la posición 16384. Y si uno quiere saber si alguien presionó una tecla, lee el valor en 24576.
+
+Actividad 2.  
