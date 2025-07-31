@@ -25,7 +25,7 @@ for (int i = 1; i <= 100; i++) {
 
 Reto 3.
 
-Al no tener en el lenguaje ensamblador esos ciclos, el programa seria el mismo del reto 1
+Al no tener ciclos en el lenguaje ensamblador, el programa seria el mismo del reto 1
 ![alt text](image.png)
 Al principio no entendi muy bien porque 101, luego busque y me pude guiar un poco mejor 
 
