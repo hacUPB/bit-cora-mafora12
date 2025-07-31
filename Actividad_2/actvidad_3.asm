@@ -177,11 +177,11 @@
   @24576
   D=A
   @R14
-  M=D          // R14 = final pantalla
+  M=D          // R14 = final pantalla (24576)
 
 (CLEAR_LOOP)
-  @R13
-  A=M
+  @R13           // puntero 
+  A=M           // es la especificacion de lo que tinene que hacer 
   M=0          // Apaga píxel actual
 
   @R13
