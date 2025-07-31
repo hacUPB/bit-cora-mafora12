@@ -33,3 +33,5 @@ Reto 7
 ![alt text](image-1.png)
 Este fue el segundo intento que se hizo y este funciono lo uqe tenia mal es que estaba cargando en "A" la dirección guardada en p_var, y además, estaba  apuntando mal porque puse @bis antes de hacer A=M
 
+El primer intento fue este 
+![alt text](image-2.png)
