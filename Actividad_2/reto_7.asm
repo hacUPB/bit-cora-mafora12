@@ -17,7 +17,7 @@ D=A
 M=D
 
 @p_var
+@bis
 A=M    // A apunta a la dirección almacenada en p_var (es decir, var)
 D=M    // D obtiene el valor en esa dirección (contenido de var)
-@bis
 M=D    // bis = valor de var

@@ -35,3 +35,13 @@ Este fue el segundo intento que se hizo y este funciono lo uqe tenia mal es que 
 
 El primer intento fue este 
 ![alt text](image-2.png)
+
+Reto   9.   
+
+Primero hice una versión pero me daba 18 no 15, revise las lineas y demas, pero me di cuenta que era como que estaba sumando a+a al estar guardado a y b en la misma dirección de memoria RAM [24].  
+
+![alt text](image-3.png)  
+
+Pero luego de revisar el codigo, muchas cosas estaban mal y demasiado largo sin necesidad, se corrigio y ahora si funciono:
+![alt text](image-4.png)
+y como nota la linea de C++ "std::cout << "El valor de c es: " << c << std::endl;" no se puede traducir fielmente en el lenguaje ensamblador porque el emulador no lo permite salida visual, pero el resultado queda almacenado en la dirección RAM[26] que es visible.
