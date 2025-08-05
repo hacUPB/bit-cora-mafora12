@@ -26,22 +26,25 @@ for (int i = 1; i <= 100; i++) {
 Reto 3.
 
 Al no tener ciclos en el lenguaje ensamblador, el programa seria el mismo del reto 1
-![alt text](image.png)
-Al principio no entendi muy bien porque 101, luego busque y me pude guiar un poco mejor 
+![Reto_3](image.png)
+Al principio no entendi muy bien porque el contenido de la ram [16], luego entendi que es un contador que incremnta con "sum" almacenado en la RAM[17], asi de tal forma cada vez va incrementando hasta que de 5050 y el contador de 101 q es el momento en el que el que el bucle para.
 
-Reto 7
-![alt text](image-1.png)
-Este fue el segundo intento que se hizo y este funciono lo uqe tenia mal es que estaba cargando en "A" la dirección guardada en p_var, y además, estaba  apuntando mal porque puse @bis antes de hacer A=M
+Reto 5.  
 
-El primer intento fue este 
-![alt text](image-2.png)
+Fue un reto que se hizo y explico en clasepor lo tanto no fue tan confuso pero igual hubo algunas dudas 
+![Reto_5](image.png)
+
+Reto 6 y 7.
+Al hacer el punto tuve una confusión soble la variable @p_var al no saber si estaba bien si se escribia en la RAM[18] el número dela dirección dela variable @var Pero si se escribe y este actua tambíen comopuntero 
+![Reto_6](Reto_6.png)
+
 
 Reto   9.   
 
 Primero hice una versión pero me daba 18 no 15, revise las lineas y demas, pero me di cuenta que era como que estaba sumando a+a al estar guardado a y b en la misma dirección de memoria RAM [24].  
 
-![alt text](image-3.png)  
+![reto_9_1](image-3.png)  
 
 Pero luego de revisar el codigo, muchas cosas estaban mal y demasiado largo sin necesidad, se corrigio y ahora si funciono:
-![alt text](image-4.png)
+![REto_9_este si](image-4.png)
 y como nota la linea de C++ "std::cout << "El valor de c es: " << c << std::endl;" no se puede traducir fielmente en el lenguaje ensamblador porque el emulador no lo permite salida visual, pero el resultado queda almacenado en la dirección RAM[26] que es visible.

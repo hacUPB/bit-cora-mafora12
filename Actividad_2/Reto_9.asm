@@ -43,7 +43,7 @@
 // Variables simbólicas 
 (a)     // a = 6
 (b)     // b = 9
-(var)   // resultado dentro de suma (puede omitirse)
+(var)   // resultado dentro de suma 
 (ret)   // valor devuelto por suma
 (c)     // c en main
 
