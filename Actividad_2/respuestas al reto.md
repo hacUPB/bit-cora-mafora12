@@ -14,7 +14,7 @@ Reto 1.
 - es el valor que está guardado en su dirección de memoria. Por ejemplo:
 Si i está en RAM[16] Y RAM[16] contiene el número 4, entonces: la dirección de i es 16, y su contenido es 4.
 
-Reto 2.
+Reto 2.  
 
 int sum = 0;
 
@@ -23,21 +23,23 @@ for (int i = 1; i <= 100; i++) {
 }
 
 
-Reto 3.
+Reto 3.  
 
-Como en el lenguaje ensamblador Hack no existen ciclos de alto nivel, el programa se desarrolla igual que en el Reto 1.
+Como en el lenguaje ensamblador Hack no existen ciclos de alto nivel, el programa se desarrolla igual que en el Reto 1.   
 
-![Reto_3](reto__3.png)
+ ![reto 3](reto_3.png)  
 
-Al principio no entendía muy bien por qué el contenido de la RAM[16] cambiaba, pero luego comprendí que actúa como un contador que se incrementa con cada iteración, mientras sum (en RAM[17]) acumula la suma. De esta manera, el ciclo continúa hasta que sum llega a 5050 y el contador i alcanza 101, momento en el que el bucle se detiene.
+Al principio no entendía muy bien por qué el contenido de la RAM[16] cambiaba, pero luego comprendí que actúa como un contador que se incrementa con cada iteración, mientras sum (en RAM[17]) acumula la suma. De esta manera, el ciclo continúa hasta que sum llega a 5050 y el contador i alcanza 101, momento en el que el bucle se detiene.  
 
 Reto 5.  
 
 Este reto se trabajó y explicó en clase, por lo cual no fue tan confuso, aunque surgieron algunas dudas durante la ejecución. 
-![Reto_5](reto_5.png)
+![reto 5](Reto_5.png)
 
-Reto 6 y 7.
-Tuve una confusión al trabajar con la variable @p_var, ya que no estaba segura si estaba bien que se escribiera en RAM[18] la dirección de la variable @var. Sin embargo, entendí que sí es correcto, ya que @p_var actúa también como un puntero.
+Reto 6 y 7.  
+
+Tuve una confusión al trabajar con la variable @p_var, ya que no estaba segura si estaba bien que se escribiera en RAM[18] la dirección de la variable @var. Sin embargo, entendí que sí es correcto, ya que @p_var actúa también como un puntero.  
+
 ![Reto_6_7](Reto_6_7.png)
 
 
@@ -45,11 +47,11 @@ Reto   9.
 
 Al principio hice una versión del código, pero el resultado era 18 en lugar de 15. Revisé las líneas y descubrí que estaba sumando a + a, porque accidentalmente había guardado ambos valores (a y b) en la misma dirección de memoria (RAM[24]).
 
-![reto_9_1](reto_9_1.png)  
+![intento 1](reto_9_1.png)
 
 Después de corregirlo, noté que muchas cosas estaban innecesariamente largas o mal organizadas, así que simplifiqué el código y finalmente funcionó.
 
-![REto_9_este si](REto_9_este si.png)
+![intento 2](<REto_9_este si.png>)
 
 y como nota la linea de C++ "std::cout << "El valor de c es: " << c << std::endl;" no puede traducirse literalmente en lenguaje ensamblador Hack, porque el emulador no permite salida visual. Sin embargo, el resultado final queda almacenado en RAM[26], lo cual es visible en la memoria.
 
