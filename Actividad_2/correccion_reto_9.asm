@@ -1,21 +1,27 @@
-// Guardar a = 6
+// Main
 @6
 D=A
-@24      // a se almacena en la dirección 24 
-M=D     // a está en la dirección RAM[24] y vale 6.
-
-// Guardar b = 9
+@a
+M=D     //guardar a=6
 @9
 D=A
-@25      // b se almacena en la dirección 25
-M=D     //b está en la dirección RAM[25] y vale 9.
+@b
+M=D     //guardar b=9
 
-// Simular la función suma: var = a + b
-@24
-D=M      // D = a (D = RAM[24] = 6 (a))
-@25
-D=D+M    // D = a + b (D = 6(a) + RAM[25] = 6 + 9 = 15)
+@SUMA       //saltar a la función suma 
+0;JMP
 
-// Guardar el resultado en c
-@26      // c en dirección 26
-M=D
+(SUMA)
+@a
+D=M     // D = a
+@b
+D=D+M       // D=a+b
+@c
+M=D         // guardar resultado en c (RAM[26])
+@END
+0;JMP       //volver al "main"
+
+// aquí se asume que la función dejará el resultado en RAM[26] (c)
+(END)
+@END
+0;JMP      // regreso al flujo principal (como si fuera return)WS

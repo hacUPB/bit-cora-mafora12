@@ -25,26 +25,56 @@ for (int i = 1; i <= 100; i++) {
 
 Reto 3.
 
-Al no tener ciclos en el lenguaje ensamblador, el programa seria el mismo del reto 1
-![Reto_3](image.png)
-Al principio no entendi muy bien porque el contenido de la ram [16], luego entendi que es un contador que incremnta con "sum" almacenado en la RAM[17], asi de tal forma cada vez va incrementando hasta que de 5050 y el contador de 101 q es el momento en el que el que el bucle para.
+Como en el lenguaje ensamblador Hack no existen ciclos de alto nivel, el programa se desarrolla igual que en el Reto 1.
+
+![Reto_3](reto__3.png)
+
+Al principio no entendía muy bien por qué el contenido de la RAM[16] cambiaba, pero luego comprendí que actúa como un contador que se incrementa con cada iteración, mientras sum (en RAM[17]) acumula la suma. De esta manera, el ciclo continúa hasta que sum llega a 5050 y el contador i alcanza 101, momento en el que el bucle se detiene.
 
 Reto 5.  
 
-Fue un reto que se hizo y explico en clasepor lo tanto no fue tan confuso pero igual hubo algunas dudas 
-![Reto_5](image.png)
+Este reto se trabajó y explicó en clase, por lo cual no fue tan confuso, aunque surgieron algunas dudas durante la ejecución. 
+![Reto_5](reto_5.png)
 
 Reto 6 y 7.
-Al hacer el punto tuve una confusión soble la variable @p_var al no saber si estaba bien si se escribia en la RAM[18] el número dela dirección dela variable @var Pero si se escribe y este actua tambíen comopuntero 
-![Reto_6](Reto_6.png)
+Tuve una confusión al trabajar con la variable @p_var, ya que no estaba segura si estaba bien que se escribiera en RAM[18] la dirección de la variable @var. Sin embargo, entendí que sí es correcto, ya que @p_var actúa también como un puntero.
+![Reto_6_7](Reto_6_7.png)
 
 
 Reto   9.   
 
-Primero hice una versión pero me daba 18 no 15, revise las lineas y demas, pero me di cuenta que era como que estaba sumando a+a al estar guardado a y b en la misma dirección de memoria RAM [24].  
+Al principio hice una versión del código, pero el resultado era 18 en lugar de 15. Revisé las líneas y descubrí que estaba sumando a + a, porque accidentalmente había guardado ambos valores (a y b) en la misma dirección de memoria (RAM[24]).
 
-![reto_9_1](image-3.png)  
+![reto_9_1](reto_9_1.png)  
 
-Pero luego de revisar el codigo, muchas cosas estaban mal y demasiado largo sin necesidad, se corrigio y ahora si funciono:
-![REto_9_este si](image-4.png)
-y como nota la linea de C++ "std::cout << "El valor de c es: " << c << std::endl;" no se puede traducir fielmente en el lenguaje ensamblador porque el emulador no lo permite salida visual, pero el resultado queda almacenado en la dirección RAM[26] que es visible.
+Después de corregirlo, noté que muchas cosas estaban innecesariamente largas o mal organizadas, así que simplifiqué el código y finalmente funcionó.
+
+![REto_9_este si](REto_9_este si.png)
+
+y como nota la linea de C++ "std::cout << "El valor de c es: " << c << std::endl;" no puede traducirse literalmente en lenguaje ensamblador Hack, porque el emulador no permite salida visual. Sin embargo, el resultado final queda almacenado en RAM[26], lo cual es visible en la memoria.
+
+Este seria el codigo definitivo, que es la traducción de las funciones y los saltos 
+![reto_9_mejorado](reto_9_mejorado.png)
+Este codigo parte de uno mas sencillo, que es:
+
+// Guardar a = 6
+@6
+D=A
+@24      // a se almacena en la dirección 24 
+M=D     // a está en la dirección RAM[24] y vale 6.
+
+// Guardar b = 9
+@9
+D=A
+@25      // b se almacena en la dirección 25
+M=D     //b está en la dirección RAM[25] y vale 9.
+
+// Simular la función suma: var = a + b
+@24
+D=M      // D = a (D = RAM[24] = 6 (a))
+@25
+D=D+M    // D = a + b (D = 6(a) + RAM[25] = 6 + 9 = 15)
+
+// Guardar el resultado en c
+@26      // c en dirección 26
+M=D
