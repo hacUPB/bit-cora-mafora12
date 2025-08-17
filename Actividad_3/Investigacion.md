@@ -57,3 +57,88 @@ Al ejecutar el programa se abre una ventana con fondo negro. En ella aparece un 
     "particleColor = ...;" → cambia el color de las partículas al nuevo color.  
 
     Cuando hago clic, el rastro cambia de color de manera aleatoria.
+
+
+
+- Codigo:
+
+h.
+
+#pragma once
+
+#include "ofMain.h"
+
+class ofApp : public ofBaseApp{
+
+    public:
+        void setup();
+        void update();
+        void draw();
+
+        void mouseMoved(int x, int y );
+        void mousePressed(int x, int y, int button);
+
+    private:
+
+        vector<ofVec2f> particles;
+        vector<Particle> particles;
+        ofColor particleColor;
+
+};
+
+
+.cpp
+
+#include "ofApp.h"
+struct Particle {
+    ofVec2f pos;
+    float alpha;
+};
+
+//--------------------------------------------------------------
+void ofApp::setup(){
+    ofBackground(0);
+    particleColor = ofColor::white;
+}
+
+//--------------------------------------------------------------
+void ofApp::update(){
+    for(auto &p: particles){
+        p.alpha -= 2; // se desvanece poco a poco
+        if(p.alpha < 0) p.alpha = 0;
+    }
+
+    // que el rastro sea más corto con el tiempo
+    if(particles.size() > 80){ // antes 100
+        particles.erase(particles.begin());
+    }
+}
+
+
+
+//--------------------------------------------------------------
+void ofApp::draw(){
+    for(auto &p: particles){
+        ofSetColor(particleColor, p.alpha); // color con transparencia
+        ofDrawCircle(p.pos.x, p.pos.y, 50);
+    }
+}
+
+
+//--------------------------------------------------------------
+void ofApp::mouseMoved(int x, int y ){
+    particles.push_back(ofVec2f(x, y));
+    if (particles.size() > 100) {
+        particles.erase(particles.begin());
+    }
+    Particle p;
+    p.pos = ofVec2f(x, y);
+    p.alpha = 255; // empieza totalmente visible
+    particles.push_back(p);
+
+}
+
+//--------------------------------------------------------------
+void ofApp::mousePressed(int x, int y, int button){
+    particleColor = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
+}
