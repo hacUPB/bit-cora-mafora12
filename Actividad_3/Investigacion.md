@@ -142,3 +142,232 @@ void ofApp::mouseMoved(int x, int y ){
 void ofApp::mousePressed(int x, int y, int button){
     particleColor = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
 }
+
+
+## ACtividad 5. 
+- 1. Un puntero es una variable que almacena la dirección de memoria de otra variable u objeto, en lugar de almacenar el valor directamente. Permite acceder y manipular datos indirectamente.  
+
+- 2. En el código hay dos punteros:
+
+    - "vector<Sphere*> spheres" - Un vector de punteros a objetos Sphere
+
+    - "Sphere* selectedSphere "- Un puntero individual a un objeto Sphere
+
+    Ambos están declarados en la clase "ofApp" como miembros privados.
+
+- 3. En el código mostrado no se ve la inicialización, pero típicamente se haría:
+    // En ofApp::setup() o constructor
+    selectedSphere = nullptr; // Inicialización a null
+
+    // O asignando la dirección de un objeto existente
+    selectedSphere = new Sphere(x, y, radius);
+    // O selectedSphere = &algunaEsferaExistente;
+
+- 4. Los punteros se usan para:
+
+     - spheres: Almacenar dinámicamente múltiples objetos Sphere sin copiarlos
+     - selectedSphere: Mantener una referencia a una esfera específica (probablemente para arrastrarla o manipularla)
+
+- 5. Los punteros almacenan:
+
+        - Direcciones de memoria donde se encuentran los objetos Sphere
+
+        - NO almacenan los objetos mismos, solo referencias a ellos
+
+        - "selectedSphere" almacena 0 (nullptr) o la dirección de una esfera existente
+
+
+## Actividad 6.
+
+AL codigo le hace falta la lógica para seleccionar y arrastrar esferas. Por lo tanro el código actual:
+
+- Crea esferas al hacer click 
+
+- Las dibuja 
+
+PERO, no detecta cuándo clickeas sobre una esfera existente, ni Permite arrastrar la esfera seleccionada
+- punteros no inicializados
+    Sphere* selectedSphere; // no inicializado  
+
+- Se duplican las clases
+// ofApp.h
+#pragma once
+#include "ofMain.h"
+
+class Sphere {  
+    // ...
+};
+
+// ofApp.cpp  
+#include "ofApp.h"  
+
+// NO debe repetir las declaraciones
+class Sphere {  // Esto no deberia de ir 
+    // ...
+};
+
+- Flata de gestion de memoria:
+    vector<Sphere*> spheres; 
+    // Se crean con 'new' pero NUNCA se liberan → **memory leak**  
+
+-   Lógica de Selección Inexistente  
+
+    void mousePressed(int x, int y, int button) {
+    // SOLO crea esferas, NO detecta selección
+    spheres.push_back(new Sphere(x, y, ofRandom(20, 50)));
+    // No verifica si clickeó sobre esfera existente
+    }
+
+- Movimiento No Implementado
+    void mouseMoved(int x, int y) {
+    // Función vacía - no mueve esferas seleccionadas
+    }
+
+- Métodos Faltantes en Sphere
+    class Sphere {
+    // Falta método para detectar colisión con punto
+    // bool contains(float x, float y);
+    };
+
+-  Falta Destructor
+    class ofApp {
+    // No tiene destructor para liberar memoria
+    // ~ofApp();
+    };
+
+- No hay muestras al usuario
+    void draw() {
+    // No muestra qué esfera está seleccionada
+    // No da feedback visual al usuario
+    }
+
+
+ofApp.h:
+#pragma once
+#include "ofMain.h"
+
+class Sphere {
+public:
+    Sphere(float x, float y, float radius);
+    void draw();
+    void update(float x, float y);
+    bool contains(float pointX, float pointY);
+    float getX();
+    float getY();
+    float getRadius();
+
+private:
+    float x, y;
+    float radius;
+    ofColor color;
+};
+
+class ofApp : public ofBaseApp {
+public:
+    void setup();
+    void update();
+    void draw();
+    void mouseMoved(int x, int y);
+    void mousePressed(int x, int y, int button);
+    void mouseReleased(int x, int y, int button);
+    ~ofApp(); // Destructor
+
+private:
+    vector<Sphere*> spheres;
+    Sphere* selectedSphere;
+    bool isDragging; // Nuevo: estado de arrastre
+};
+
+ofapp.cpp
+#include "ofApp.h"
+
+Sphere::Sphere(float x, float y, float radius) 
+    : x(x), y(y), radius(radius) {
+    color = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
+}
+
+void Sphere::draw() {
+    ofSetColor(color);
+    ofDrawCircle(x, y, radius);
+    ofSetColor(0);
+    ofDrawCircle(x, y, 2); // Punto central para referencia
+}
+
+void Sphere::update(float x, float y) {
+    this->x = x;
+    this->y = y;
+}
+
+bool Sphere::contains(float pointX, float pointY) {
+    float distance = sqrt(pow(pointX - x, 2) + pow(pointY - y, 2));
+    return distance <= radius;
+}
+
+float Sphere::getX() { return x; }
+float Sphere::getY() { return y; }
+float Sphere::getRadius() { return radius; }
+
+// Implementación de ofApp
+void ofApp::setup() {
+    selectedSphere = nullptr;
+    isDragging = false;
+}
+
+void ofApp::update() {
+    // Lógica de actualización si es necesaria
+}
+
+void ofApp::draw() {
+    ofBackground(50);
+    
+    for (auto sphere : spheres) {
+        sphere->draw();
+    }
+    
+    // Dibujar info de selección
+    if (selectedSphere) {
+        ofSetColor(255, 255, 0);
+        ofNoFill();
+        ofDrawCircle(selectedSphere->getX(), selectedSphere->getY(), 
+                    selectedSphere->getRadius() + 2);
+    }
+}
+
+void ofApp::mouseMoved(int x, int y) {
+    if (isDragging && selectedSphere) {
+        selectedSphere->update(x, y);
+    }
+}
+
+void ofApp::mousePressed(int x, int y, int button) {
+    if (button == OF_MOUSE_BUTTON_LEFT) {
+        // Verificar si clickeó sobre una esfera existente
+        selectedSphere = nullptr;
+        for (int i = spheres.size() - 1; i >= 0; i--) {
+            if (spheres[i]->contains(x, y)) {
+                selectedSphere = spheres[i];
+                isDragging = true;
+                break;
+            }
+        }
+        
+        // Si no clickeó sobre esfera existente, crear nueva
+        if (!selectedSphere) {
+            Sphere* newSphere = new Sphere(x, y, ofRandom(20, 40));
+            spheres.push_back(newSphere);
+        }
+    }
+}
+
+void ofApp::mouseReleased(int x, int y, int button) {
+    if (button == OF_MOUSE_BUTTON_LEFT) {
+        isDragging = false;
+    }
+}
+
+ofApp::~ofApp() {
+    for (auto sphere : spheres) {
+        delete sphere;
+    }
+    spheres.clear();
+}
