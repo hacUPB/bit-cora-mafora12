@@ -64,9 +64,9 @@ Al ejecutar el programa se abre una ventana con fondo negro. En ella aparece un 
 
 
 ## Actividad 5. 
-- 1. Un puntero es una variable que almacena la dirección de memoria de otra variable u objeto, en lugar de almacenar el valor directamente. Permite acceder y manipular datos indirectamente.  
+- Un puntero es una variable que almacena la dirección de memoria de otra variable u objeto, en lugar de almacenar el valor directamente. Permite acceder y manipular datos indirectamente.  
 
-- 2. En el código hay dos punteros:
+- En el código hay dos punteros:
 
     - "vector<Sphere*> spheres" - Un vector de punteros a objetos Sphere
 
@@ -74,7 +74,7 @@ Al ejecutar el programa se abre una ventana con fondo negro. En ella aparece un 
 
     Ambos están declarados en la clase "ofApp" como miembros privados.
 
-- 3. En el código mostrado no se ve la inicialización, pero típicamente se haría:
+- En el código mostrado no se ve la inicialización, pero típicamente se haría:
     // En ofApp::setup() o constructor
     selectedSphere = nullptr; // Inicialización a null
 
@@ -82,12 +82,12 @@ Al ejecutar el programa se abre una ventana con fondo negro. En ella aparece un 
     selectedSphere = new Sphere(x, y, radius);
     // O selectedSphere = &algunaEsferaExistente;
 
-- 4. Los punteros se usan para:
+- Los punteros se usan para:
 
      - spheres: Almacenar dinámicamente múltiples objetos Sphere sin copiarlos
      - selectedSphere: Mantener una referencia a una esfera específica (probablemente para arrastrarla o manipularla)
 
-- 5. Los punteros almacenan:
+- Los punteros almacenan:
 
         - Direcciones de memoria donde se encuentran los objetos Sphere
 
