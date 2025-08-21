@@ -61,8 +61,6 @@ Al ejecutar el programa se abre una ventana con fondo negro. En ella aparece un 
 
 
 
-
-
 ## Actividad 5. 
 - Un puntero es una variable que almacena la dirección de memoria de otra variable u objeto, en lugar de almacenar el valor directamente. Permite acceder y manipular datos indirectamente.  
 
