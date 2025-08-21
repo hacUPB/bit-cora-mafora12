@@ -60,91 +60,10 @@ Al ejecutar el programa se abre una ventana con fondo negro. En ella aparece un 
 
 
 
-- Codigo:
-
-h.
-
-#pragma once
-
-#include "ofMain.h"
-
-class ofApp : public ofBaseApp{
-
-    public:
-        void setup();
-        void update();
-        void draw();
-
-        void mouseMoved(int x, int y );
-        void mousePressed(int x, int y, int button);
-
-    private:
-
-        vector<ofVec2f> particles;
-        vector<Particle> particles;
-        ofColor particleColor;
-
-};
-
-
-.cpp
-
-#include "ofApp.h"
-struct Particle {
-    ofVec2f pos;
-    float alpha;
-};
-
-//--------------------------------------------------------------
-void ofApp::setup(){
-    ofBackground(0);
-    particleColor = ofColor::white;
-}
-
-//--------------------------------------------------------------
-void ofApp::update(){
-    for(auto &p: particles){
-        p.alpha -= 2; // se desvanece poco a poco
-        if(p.alpha < 0) p.alpha = 0;
-    }
-
-    // que el rastro sea más corto con el tiempo
-    if(particles.size() > 80){ // antes 100
-        particles.erase(particles.begin());
-    }
-}
 
 
 
-//--------------------------------------------------------------
-void ofApp::draw(){
-    for(auto &p: particles){
-        ofSetColor(particleColor, p.alpha); // color con transparencia
-        ofDrawCircle(p.pos.x, p.pos.y, 50);
-    }
-}
-
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-    particles.push_back(ofVec2f(x, y));
-    if (particles.size() > 100) {
-        particles.erase(particles.begin());
-    }
-    Particle p;
-    p.pos = ofVec2f(x, y);
-    p.alpha = 255; // empieza totalmente visible
-    particles.push_back(p);
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-    particleColor = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
-}
-
-
-## ACtividad 5. 
+## Actividad 5. 
 - 1. Un puntero es una variable que almacena la dirección de memoria de otra variable u objeto, en lugar de almacenar el valor directamente. Permite acceder y manipular datos indirectamente.  
 
 - 2. En el código hay dos punteros:
@@ -242,132 +161,133 @@ class Sphere {  // Esto no deberia de ir
     }
 
 
-ofApp.h:
+### Avtividad 7. 
+- Cuando presiono la tecla “c”, el programa intenta crear un nuevo objeto Sphere y guardarlo en el vector globalVector. Pero ese objeto se crea dentro de la función, en la memoria temporal de la pila, así que mientras la función se ejecuta se dibuja bien. Cuando la función termina, el objeto deja de existir, pero el vector sigue guardando un puntero a esa memoria que ya no es válida. Por eso, al dibujar desde el vector después, los valores de posición pueden ser incorrectos y dibujar el objeto puede fallar o no mostrar nada.
+
+- Al presionar “c” ahora se crea un objeto que persiste en el programa, se dibuja bien y se guarda en el vector sin problemas, porque está en el heap y no desaparece al terminar la función. Esto evita los errores que tenías antes con objetos creados en el stack.
+
+- Esto pasa porque ahora el objeto ya no se crea en la pila, que solo dura mientras la función se ejecuta y luego desaparece, sino en la memoria dinámica (heap). Los objetos en el heap se mantienen en memoria hasta que los eliminas con delete. Por eso, guardar un puntero a un objeto del heap en el vector es seguro, ya que la memoria no se borra automáticamente al salir de la función. Así, los objetos se pueden dibujar y usar más adelante sin que haya errores ni comportamientos extraños.
+
+### Actividad 8. 
+.h:
+
+```javascript
 #pragma once
 #include "ofMain.h"
 
-class Sphere {
+// Clase básica de círculo
+class Circle {
 public:
-    Sphere(float x, float y, float radius);
-    void draw();
-    void update(float x, float y);
-    bool contains(float pointX, float pointY);
-    float getX();
-    float getY();
-    float getRadius();
-
-private:
+    Circle(float x, float y, float r) : x(x), y(y), radius(r) {}
+    void draw() const {
+        ofDrawCircle(x, y, radius);
+    }
     float x, y;
     float radius;
-    ofColor color;
 };
+
+// Objeto global (memoria global)
+Circle globalCircle(100, 100, 50);
 
 class ofApp : public ofBaseApp {
 public:
     void setup();
     void update();
     void draw();
-    void mouseMoved(int x, int y);
     void mousePressed(int x, int y, int button);
-    void mouseReleased(int x, int y, int button);
-    ~ofApp(); // Destructor
+    void keyPressed(int key);
 
 private:
-    vector<Sphere*> spheres;
-    Sphere* selectedSphere;
-    bool isDragging; // Nuevo: estado de arrastre
+    void createHeapCircle(float x, float y);
+    void createStackCircle(float x, float y);
+
+    std::vector<Circle*> heapCircles; // círculos en heap
+    std::vector<Circle> stackCircles; // copias de círculos en stack
 };
 
-ofapp.cpp
+```
+.cpp
+```javascript
 #include "ofApp.h"
 
-Sphere::Sphere(float x, float y, float radius) 
-    : x(x), y(y), radius(radius) {
-    color = ofColor(ofRandom(255), ofRandom(255), ofRandom(255));
-}
-
-void Sphere::draw() {
-    ofSetColor(color);
-    ofDrawCircle(x, y, radius);
-    ofSetColor(0);
-    ofDrawCircle(x, y, 2); // Punto central para referencia
-}
-
-void Sphere::update(float x, float y) {
-    this->x = x;
-    this->y = y;
-}
-
-bool Sphere::contains(float pointX, float pointY) {
-    float distance = sqrt(pow(pointX - x, 2) + pow(pointY - y, 2));
-    return distance <= radius;
-}
-
-float Sphere::getX() { return x; }
-float Sphere::getY() { return y; }
-float Sphere::getRadius() { return radius; }
-
-// Implementación de ofApp
+//--------------------------------------------------------------
 void ofApp::setup() {
-    selectedSphere = nullptr;
-    isDragging = false;
+    ofBackground(0);
 }
 
+//--------------------------------------------------------------
 void ofApp::update() {
-    // Lógica de actualización si es necesaria
+    // Nada por ahora
 }
 
+//--------------------------------------------------------------
 void ofApp::draw() {
-    ofBackground(50);
-    
-    for (auto sphere : spheres) {
-        sphere->draw();
+    // Dibujar círculo global
+    ofSetColor(255, 0, 0);
+    globalCircle.draw();
+    ofDrawBitmapString("Global Circle (siempre existe)", 20, 20);
+
+    // Dibujar círculos en heap
+    int yOffset = 50;
+    ofSetColor(0, 255, 0);
+    for (Circle* c : heapCircles) {
+        c->draw();
     }
-    
-    // Dibujar info de selección
-    if (selectedSphere) {
-        ofSetColor(255, 255, 0);
-        ofNoFill();
-        ofDrawCircle(selectedSphere->getX(), selectedSphere->getY(), 
-                    selectedSphere->getRadius() + 2);
+
+    // Dibujar círculos en stack
+    ofSetColor(0, 0, 255);
+    for (Circle& c : stackCircles) {
+        c.draw();
     }
 }
 
-void ofApp::mouseMoved(int x, int y) {
-    if (isDragging && selectedSphere) {
-        selectedSphere->update(x, y);
-    }
-}
-
+//--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button) {
     if (button == OF_MOUSE_BUTTON_LEFT) {
-        // Verificar si clickeó sobre una esfera existente
-        selectedSphere = nullptr;
-        for (int i = spheres.size() - 1; i >= 0; i--) {
-            if (spheres[i]->contains(x, y)) {
-                selectedSphere = spheres[i];
-                isDragging = true;
-                break;
-            }
-        }
-        
-        // Si no clickeó sobre esfera existente, crear nueva
-        if (!selectedSphere) {
-            Sphere* newSphere = new Sphere(x, y, ofRandom(20, 40));
-            spheres.push_back(newSphere);
-        }
+        // Presionar clic izquierdo: crear objeto en heap
+        createHeapCircle(x, y);
+    }
+    else if (button == OF_MOUSE_BUTTON_RIGHT) {
+        // Presionar clic derecho: crear objeto en stack
+        createStackCircle(x, y);
     }
 }
 
-void ofApp::mouseReleased(int x, int y, int button) {
-    if (button == OF_MOUSE_BUTTON_LEFT) {
-        isDragging = false;
+//--------------------------------------------------------------
+void ofApp::createHeapCircle(float x, float y) {
+    Circle* c = new Circle(x, y, 30);
+    heapCircles.push_back(c);
+    ofLog() << "Created Heap Circle at: " << c->x << ", " << c->y;
+}
+
+//--------------------------------------------------------------
+void ofApp::createStackCircle(float x, float y) {
+    Circle c(x, y, 30);
+    stackCircles.push_back(c); // guardamos copia para poder dibujar después
+    ofLog() << "Created Stack Circle at: " << c.x << ", " << c.y;
+}
+
+//--------------------------------------------------------------
+void ofApp::keyPressed(int key) {
+    if (key == 'g') {
+        // Mover el círculo global a una posición aleatoria
+        globalCircle.x = ofRandom(50, ofGetWidth() - 50);
+        globalCircle.y = ofRandom(50, ofGetHeight() - 50);
+        ofLog() << "Moved Global Circle to: " << globalCircle.x << ", " << globalCircle.y;
     }
 }
 
-ofApp::~ofApp() {
-    for (auto sphere : spheres) {
-        delete sphere;
-    }
-    spheres.clear();
-}
+
+```
+ | Tipo de almacenamiento | Qué ocurre                                                                                                                                              |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Heap** (`new`)       | Los objetos persisten en memoria hasta que los elimines con `delete`. Puedes crear muchos objetos dinámicamente y acceder a ellos en cualquier momento. |
+| **Stack** (local)      | Los objetos solo existen mientras dura la función que los creó. Si quieres usarlos después, necesitas **copiarlos** a otro lugar.                       |
+| **Global**             | Los objetos existen durante toda la ejecución del programa. Útiles si siempre necesitas acceso a ellos.                                                 |
+
+
+### Actividad 9.
+
+- Cuando presiono la tecla “f”, el programa revisa si hay objetos en heapObjects. Si hay al menos uno, elimina el último círculo azul que creé con el mouse, liberando la memoria que estaba ocupando en el heap. Después quita el puntero del vector, así el objeto desaparece y no se dibuja más en pantalla.
+
+- Estas líneas revisan primero si el vector "heapObjects" tiene al menos un objeto. Si es así, toma el último objeto creado en el "heap" y libera la memoria que estaba ocupando con delete. Después quita el puntero del vector con "pop_back", para que ya no esté en la lista ni se dibuje más. Así me aseguro de que no queden objetos ocupando memoria innecesariamente y evito errores.
