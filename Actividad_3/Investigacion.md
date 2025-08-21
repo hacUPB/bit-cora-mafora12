@@ -105,60 +105,30 @@ AL codigo le hace falta la lógica para seleccionar y arrastrar esferas. Por lo 
 - Las dibuja 
 
 PERO, no detecta cuándo clickeas sobre una esfera existente, ni Permite arrastrar la esfera seleccionada
-- punteros no inicializados
-    Sphere* selectedSphere; // no inicializado  
+- Además, tu función mouseMoved está vacía:
 
-- Se duplican las clases
-// ofApp.h
-#pragma once
-#include "ofMain.h"
+"void ofApp::mouseMoved(int x, int y ){}"
 
-class Sphere {  
-    // ...
-};
+La esfera no se mueve cuando arrastras el mouse, aunque hayas seleccionado una.
 
-// ofApp.cpp  
-#include "ofApp.h"  
+También, no hay destrucción de los objetos en el destructor de ofApp, lo que genera fugas de memoria porque todas las esferas creadas con new nunca se borran.
 
-// NO debe repetir las declaraciones
-class Sphere {  // Esto no deberia de ir 
-    // ...
-};
+agregar estas lineas para agregarlo 
 
-- Flata de gestion de memoria:
-    vector<Sphere*> spheres; 
-    // Se crean con 'new' pero NUNCA se liberan → **memory leak**  
-
--   Lógica de Selección Inexistente  
-
-    void mousePressed(int x, int y, int button) {
-    // SOLO crea esferas, NO detecta selección
-    spheres.push_back(new Sphere(x, y, ofRandom(20, 50)));
-    // No verifica si clickeó sobre esfera existente
+void ofApp::mouseReleased(int x, int y, int button){
+    if(button == OF_MOUSE_BUTTON_LEFT){
+        selectedSphere = nullptr; // dejamos de mover la esfera
     }
+}
 
-- Movimiento No Implementado
-    void mouseMoved(int x, int y) {
-    // Función vacía - no mueve esferas seleccionadas
+Agregar destructor para liberar memoria del heap:
+
+ofApp::~ofApp(){
+    for(auto sphere : spheres){
+        delete sphere;
     }
-
-- Métodos Faltantes en Sphere
-    class Sphere {
-    // Falta método para detectar colisión con punto
-    // bool contains(float x, float y);
-    };
-
--  Falta Destructor
-    class ofApp {
-    // No tiene destructor para liberar memoria
-    // ~ofApp();
-    };
-
-- No hay muestras al usuario
-    void draw() {
-    // No muestra qué esfera está seleccionada
-    // No da feedback visual al usuario
-    }
+    spheres.clear();
+}
 
 
 ### Avtividad 7. 
