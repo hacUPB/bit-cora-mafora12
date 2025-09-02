@@ -288,7 +288,4 @@ Cosas como cam, xStep o sphereRadius son simplemente variables miembro de la cla
 
     - Con unique_ptr el manejo es mucho más seguro, porque libera la memoria automáticamente.
 
-    - En general, en mi aplicación se usan las tres zonas: heap (vectores y objetos dinámicos), global (estructura de globalVector) y heap de clase (miembros de ofApp).
-
-3.  el video se encuentra dentro de la carpeta nombrada como Actividad_3
-<video controls src="video_demostrativo.mp4" title="Title"></video>
+    -En general, en mi aplicación se usan las tres zonas: heap (vectores y objetos dinámicos), global (estructura de globalVector) y heap de clase (miembros de ofApp).
