@@ -54,3 +54,28 @@ La razón principal está en la gestión de memoria: un arreglo necesita un bloq
 Además, las operaciones de inserción y eliminación en una lista enlazada son más eficientes cuando se realizan en posiciones intermedias. En un arreglo, insertar un elemento en medio implica mover todos los elementos siguientes una posición hacia la derecha, y eliminar uno requiere moverlos hacia la izquierda. En una lista enlazada, basta con ajustar los punteros de los nodos cercanos, sin necesidad de mover el resto de los elementos. Esto representa una gran ventaja en situaciones donde estas operaciones son muy frecuentes.
 
 9. 
+Después de aprender sobre el manejo de memoria en listas enlazadas, creo que podría usar este conocimiento para diseñar una estructura de datos a la medida de una aplicación creativa, por ejemplo un programa donde los usuarios creen historias interactivas y se necesite insertar o eliminar partes en cualquier momento. Las listas enlazadas me ayudarían a organizar esos bloques de información sin preocuparme por tener todo en un espacio continuo de memoria. Para que funcione bien, tendría que fijarme en cómo administrar cada nodo: liberar la memoria cuando ya no se use, evitar dejar referencias colgando y, al mismo tiempo, cuidar que las operaciones sean rápidas para no afectar la experiencia del usuario. También pensaría en la forma de recorrer la lista para que el acceso a los datos no sea lento y así lograr que la aplicación sea eficiente y sin fugas de memoria.
+
+10. 
+Cuando pienso en las diferencias entre C++ y un lenguaje como C#, lo primero que noto es que en C++ tengo un control total de la memoria. Eso significa que yo decido exactamente cuándo crear y cuándo liberar los nodos de una lista enlazada, lo que me da mucha flexibilidad para optimizar. La ventaja es que puedo diseñar estructuras de datos súper eficientes, evitando desperdicios de memoria y ajustándolas a lo que necesito.
+
+Sin embargo, ese control también tiene un costo: tengo que estar muy pendiente de no olvidarme de liberar memoria, porque si lo hago, puedo causar fugas que hagan que el programa se vuelva lento o consuma más recursos de lo debido. Eso me genera cierta presión, porque cada puntero que manejo es una responsabilidad.
+
+En cambio, con C#, sé que el recolector de basura me respalda. Eso me da tranquilidad, ya que no me preocupo tanto por liberar memoria de forma manual. Pero también siento que pierdo un poco de control: el recolector puede decidir liberar memoria en un momento inesperado y afectar el rendimiento, lo que puede ser frustrante si quiero máxima eficiencia.
+
+Personalmente, me parece que trabajar en C++ me ayuda a entender mejor cómo funciona la memoria de verdad, me hace más consciente de lo que pasa “detrás de escena”. Siento que, aunque es más difícil, me da una base fuerte para después trabajar en lenguajes como C# sin confiarme demasiado en el recolector. En resumen, es un reto que me exige más cuidado, pero también me da un poder que no tendría en otros lenguajes.
+
+11. 
+Si pienso en una pieza de arte generativo hecha con listas enlazadas, donde cada nodo representa un elemento en movimiento (como partículas, trazos o figuras que aparecen y desaparecen), tendría varias consideraciones para que la memoria se maneje bien y no se desperdicie:
+
+Liberar nodos cuando ya no son útiles: si un elemento de la animación se sale de la pantalla o cumple su ciclo de vida, debería eliminar su nodo de la lista de inmediato. Eso evita acumular memoria con objetos “muertos” que ya no se ven.
+
+Controlar los ciclos de vida: tendría que diseñar una regla clara de cuándo un nodo nace y cuándo muere. Por ejemplo, un nodo puede durar 3 segundos o cierto número de frames, y al llegar a ese límite se libera.
+
+Reutilización de memoria (pooling): en lugar de crear y destruir nodos todo el tiempo, podría implementar un “pool” donde los nodos eliminados no se borran completamente, sino que se reciclan para nuevos elementos. Esto hace más eficiente el programa y reduce fragmentación de memoria.
+
+Uso de punteros inteligentes (en C++): si lo programara en C++, preferiría usar unique_ptr o shared_ptr en lugar de punteros crudos, para que la liberación de memoria sea más segura y evitar fugas cuando elimino nodos.
+
+Depuración constante: incluiría pruebas de memoria (con herramientas como Valgrind, si usara C++) para asegurarme de que no queden fugas escondidas en la animación.
+
+Balance entre estética y eficiencia: como es arte generativo, podría ser tentador dejar que haya muchísimos nodos activos a la vez, pero también pensaría en limitar el número máximo de elementos para que no consuma memoria de forma descontrolada.
