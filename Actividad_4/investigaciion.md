@@ -103,8 +103,10 @@ La estructura de un stack afecta directamente el orden en que se accede y se eli
 
 5. 
 Para modificar mi stack y que pueda almacenar objetos más complejos sin problemas de memoria, lo que haría sería guardar los objetos directamente en el nodo o usar punteros inteligentes. Si los guardo por valor dentro del nodo, cuando elimine el nodo también se libera el objeto automáticamente y no tengo que preocuparme por fugas de memoria, aunque puede ser más pesado si los objetos son grandes. La otra opción es usar unique_ptr, que me permite crear los objetos en el heap pero con la seguridad de que se liberan solos cuando ya no los necesito, lo que también me evita usar delete manual. En ambos casos, la clave es manejar la memoria de forma que todo se libere correctamente y no queden espacios ocupados innecesariamente. Esto cambiaría mi implementación actual porque ya no estaría usando new y delete de forma directa, sino que estaría aprovechando el control automático de memoria, lo que hace que el código sea más seguro y menos propenso a errores.
-EJELMPLO:
 
+EJELMPLO:  
+Guardar el objeto directo en el nodo
+``` js
 class Circle {
 public:
     float x, y, radius;
@@ -118,3 +120,18 @@ public:
 
     Node(Circle c) : data(c), next(nullptr) {}
 };
+```  
+Usar punteros inteligentes  
+
+``` js
+#include <memory>
+
+class Node {
+public:
+    std::unique_ptr<Circle> data;  // El puntero inteligente gestiona la memoria
+    Node* next;
+
+    Node(float x, float y, float r) 
+        : data(std::make_unique<Circle>(x, y, r)), next(nullptr) {}
+};
+```
