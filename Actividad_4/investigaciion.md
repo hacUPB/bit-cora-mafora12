@@ -10,6 +10,7 @@ Al ver el código de una lista enlazada en C++, los nodos se vinculan entre sí 
 
 4.  
 En una lista enlazada la memoria se gestiona de forma dinámica. Cada vez que creo un nodo uso el operador new, que aparta espacio en memoria para guardar tanto el dato como el puntero al siguiente nodo. Cuando ya no necesito ese nodo, debo liberarlo con delete, para que la memoria quede disponible y no se desperdicie (esto se conoce como evitar fugas de memoria).
+
 ----  
 6.  
 La principal ventaja de una lista enlazada frente a un arreglo es que insertar o eliminar elementos en posiciones intermedias es más eficiente, porque no necesito mover todos los demás elementos como pasaría en un arreglo. En la lista simplemente cambio los punteros de los nodos y ya está. En cambio, en un arreglo, al estar los datos en posiciones contiguas de memoria, hay que desplazar varios elementos para mantener el orden, lo que consume más tiempo y recursos.
