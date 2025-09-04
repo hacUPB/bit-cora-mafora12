@@ -33,7 +33,7 @@ Cuando invoco clear() en la lista enlazada ocurre lo siguiente en la memoria, pa
 
     - 5. Repito 2–4 hasta que current sea nullptr (ya no quedan nodos).
 
-    -6. Al salir del bucle pongo head = nullptr; tail = nullptr; size = 0; para dejar la lista en estado vacío y evitar que head o tail apunten a memoria liberada.
+    - 6. Al salir del bucle pongo head = nullptr; tail = nullptr; size = 0; para dejar la lista en estado vacío y evitar que head o tail apunten a memoria liberada.
 
 Consecuencias / puntos importantes:
 
