@@ -8,7 +8,7 @@ La diferencia con un arreglo es que en un arreglo los elementos sí están guard
 2.  
 Al ver el código de una lista enlazada en C++, los nodos se vinculan entre sí a través de un puntero. Cada nodo no solo guarda el dato que necesito, sino también un puntero que señala a la dirección de memoria donde está el siguiente nodo. Gracias a esa estructura es posible que la lista se vaya conectando nodo por nodo sin necesidad de que estén en posiciones contiguas en la memoria.
 
-4.
+4.  
 En una lista enlazada la memoria se gestiona de forma dinámica. Cada vez que creo un nodo uso el operador new, que aparta espacio en memoria para guardar tanto el dato como el puntero al siguiente nodo. Cuando ya no necesito ese nodo, debo liberarlo con delete, para que la memoria quede disponible y no se desperdicie (esto se conoce como evitar fugas de memoria).
 ----  
 6.  
