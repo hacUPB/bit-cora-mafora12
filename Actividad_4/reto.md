@@ -138,12 +138,23 @@ Probé uno por uno para confirmar que cada función (drawMode1, drawMode2, drawM
 
 #### Modo 1.  
 
-![alt text](image-4.png)
+![alt text](image-4.png)  
 
+En este modo se dibujan rectángulos concéntricos que se van reduciendo de tamaño y rotando progresivamente. Cada rectángulo se escala un poco menos que el anterior (ofScale). También se aplica una rotación (ofRotateDeg) controlada por la posición del mouse en el eje Y (para).  
+
+El efecto final es un patrón dinámico que cambia dependiendo del movimiento del mouse. Implementación correcta: Se logró el comportamiento esperado de rectángulos en cascada que giran de manera fluida, confirmando que los cálculos de escalado y rotación fueron aplicados adecuadamente.
 #### Modo 2.   
 
-![alt text](image-5.png)
+![alt text](image-5.png)  
+
+En este modo utilicé un efecto de degradado de colores en los rectángulos, se interpolan dos colores (ofColor::getLerped) para simular el lerpColor de p5.js. Los rectángulos se van rotando con un ángulo fijo de 45° y se aplican escalas sucesivas. La opacidad (alpha) también cambia de manera progresiva, dando sensación de profundidad.
+
+ Pude comprobar que los colores de la cola se aplican de manera dinámica y que el degradado se genera de forma uniforme en todos los rectángulos. El resultado visual demuestra que la lógica de mezcla de colores fue implementada satisfactoriamente.
 
 ### Modo 3.   
 
-![alt text](image-6.png)
+![alt text](image-6.png)  
+
+Este modo dibuja círculos en espejo, distribuidos hacia la izquierda y la derecha del centro. Se crean pares de círculos simétricos con traslaciones (ofTranslate). Se van reduciendo mediante escalado y rotación, logrando un patrón visual repetitivo y en expansión. El color se mantiene fijo con transparencia, destacando la estructura generativa.
+
+El modo funciona según lo planeado: los círculos aparecen en espejo y se transforman dinámicamente con la interacción del mouse, validando que las transformaciones fueron aplicadas en el orden correcto.
