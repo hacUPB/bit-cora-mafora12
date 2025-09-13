@@ -156,5 +156,3 @@ En este modo utilicé un efecto de degradado de colores en los rectángulos, se 
 ![alt text](image-6.png)  
 
 Este modo dibuja círculos en espejo, distribuidos hacia la izquierda y la derecha del centro. Se crean pares de círculos simétricos con traslaciones (ofTranslate). Se van reduciendo mediante escalado y rotación, logrando un patrón visual repetitivo y en expansión. El color se mantiene fijo con transparencia, destacando la estructura generativa.
-
-El modo funciona según lo planeado: los círculos aparecen en espejo y se transforman dinámicamente con la interacción del mouse, validando que las transformaciones fueron aplicadas en el orden correcto.
