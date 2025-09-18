@@ -1,0 +1,9 @@
+La obra de arte generativo dinámica se basa en una cuadrícula de formas geométricas que cambian de aspecto, cantidad y movimiento a partir de la interacción del usuario. Al mover el mouse horizontalmente, se controla la cantidad de figuras en cada celda, mientras que al desplazarlo verticalmente, se modifica el ángulo y la rotación de las formas. Además, con las teclas el usuario puede alterar la densidad de la cuadrícula, cambiar entre diferentes modos de visualización (rectángulos apilados, patrones de color y círculos en movimiento), e incluso guardar capturas de los resultados, convirtiendo la experiencia en un proceso creativo abierto y único.
+
+En cuanto a los requisitos:
+
+Combinación de estructuras de datos: la cuadrícula se maneja como un arreglo bidimensional, donde cada celda guarda la posición de un grupo de figuras. Adicionalmente, se puede imaginar el uso de una pila o cola para gestionar el ciclo de vida de las formas: por ejemplo, una pila para apilar nuevas figuras en cada celda cuando aumenta el count, y una cola para eliminar las más antiguas cuando desaparecen, evitando que la memoria se sature.
+
+Interactividad: el código ya incluye varias formas de interacción: el movimiento del mouse cambia el número y la transformación de las figuras, y las teclas permiten modificar modos de visualización, la cantidad de filas y columnas de la cuadrícula o guardar un fotograma en PNG. Esto hace que la obra responda directamente a las decisiones del usuario, dándole dinamismo.
+
+Gestión de memoria: en un contexto creativo, la memoria se gestiona liberando los elementos que ya no se muestran en pantalla. Es decir, cuando la pila o la cola eliminan figuras que se salen del rango o dejan de ser visibles, se asegura que no queden “restos” consumiendo recursos. Así, el programa puede correr indefinidamente sin generar fugas de memoria, manteniendo fluidez en la animación.
