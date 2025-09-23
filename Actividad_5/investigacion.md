@@ -20,3 +20,17 @@ Por ejemplo, el método move(dx, dy) usa el valor actual de x e y y les suma los
 
 ### Conclusión 
 Entendí que el tamaño de un objeto depende de sus atributos, mientras que los métodos no ocupan espacio dentro de él. Esto me muestra que al diseñar clases debo pensar bien qué datos realmente necesita guardar cada instancia y qué puedo manejar como estático o compartido para no desperdiciar memoria.
+
+## Sesion 2    
+- Cuando una clase tiene métodos virtuales, cada objeto guarda un puntero extra que apunta a la tabla de funciones virtuales (vtable). Eso hace que el objeto ocupe un poco más de memoria que uno sin métodos virtuales.
+- Las vtables son las que permiten que el programa sepa qué versión de un método debe ejecutar en tiempo de ejecución. Gracias a ellas, si llamo a display() desde un puntero a Base, el programa decide si usar la función de Base o la de Derived, haciendo posible el polimorfismo.  
+
+- No son lo mismo. La vtable la crea el compilador para las funciones virtual y cada objeto tiene un puntero oculto (vptr) a esa tabla; eso permite el polimorfismo automático. El funcPtr de la clase es un miembro explícito que tú asignas y controlas manualmente. Ambos contienen direcciones de funciones, pero la vtable es un mecanismo del compilador para despacho dinámico, mientras que un puntero a función es solo un dato del objeto que puede apuntar a cualquier función compatible. (Ojo: hay también los pointer-to-member que funcionan distinto; aquí usamos un puntero a función estática, que es más simple.)  
+
+- Llamar por un puntero a función o por una función virtual añade una indirección: en vez de una llamada directa, se tiene que cargar una dirección y saltar a ella. Eso impide que el compilador haga inlining y tiene un coste pequeño (una carga y un salto indirecto). En llamadas aisladas no es mucho problema, pero en bucles muy calientes puede notarse. La ventaja es la flexibilidad (puedes cambiar el comportamiento en tiempo de ejecución), así que es un trade-off entre rendimiento y diseño.  
+
+### Conclusión   
+
+- Los datos (atributos) de un objeto se guardan en memoria cuando se crea la instancia. En cambio, los métodos no se duplican en cada objeto, sino que el código de las funciones vive aparte en la sección de código del programa.  
+- Cuando se usa un objeto, el programa accede a sus atributos directamente desde la memoria donde está guardado, y si se llama un método, el objeto solo pasa su dirección (this) para que la función sepa con qué datos trabajar.  
+- Entender dónde están los datos y cómo se usan los métodos ayuda a organizar mejor las clases, ahorrar memoria y escribir sistemas más eficientes. También permite anticipar cómo se comporta el programa en tiempo de ejecución.  
