@@ -34,3 +34,54 @@ Entendí que el tamaño de un objeto depende de sus atributos, mientras que los 
 - Los datos (atributos) de un objeto se guardan en memoria cuando se crea la instancia. En cambio, los métodos no se duplican en cada objeto, sino que el código de las funciones vive aparte en la sección de código del programa.  
 - Cuando se usa un objeto, el programa accede a sus atributos directamente desde la memoria donde está guardado, y si se llama un método, el objeto solo pasa su dirección (this) para que la función sepa con qué datos trabajar.  
 - Entender dónde están los datos y cómo se usan los métodos ayuda a organizar mejor las clases, ahorrar memoria y escribir sistemas más eficientes. También permite anticipar cómo se comporta el programa en tiempo de ejecución.  
+
+
+## Sesion 3  
+
+- El encapsulamiento es básicamente ocultar los detalles internos de una clase y controlar qué puede ver y usar el código externo. Su propósito es organizar mejor el programa, evitar que cualquiera modifique directamente los datos internos y obligar a usar métodos definidos (getters/setters o funciones) para interactuar con esos datos.
+
+- Porque así se asegura que los datos se usen de la forma correcta. Si cualquiera pudiera cambiarlos desde afuera, sería muy fácil cometer errores, romper la lógica del programa o dejar el sistema en un estado incorrecto. Restringir el acceso da más control y hace el código más seguro y fácil de mantener.  
+
+- "reinterpret_cast" es una forma de decirle al compilador: “trata esta dirección de memoria como si fuera de otro tipo”. Eso es muy arriesgado porque se puede terminar leyendo o escribiendo datos de una forma que no corresponde, lo que rompe la seguridad, puede causar errores raros y vuelve el programa poco confiable.
+
+- Porque los miembros privados siguen existiendo en la memoria del objeto, el compilador solo prohíbe acceder a ellos escribiendo sus nombres en el código. Al usar punteros y reinterpret_cast, lo que se hace es leer directamente la memoria, y ahí el compilador ya no puede proteger nada.   
+
+- Las consecuencias serían graves: el programa puede volverse inestable, dar resultados incorrectos, tener errores difíciles de encontrar o incluso abrir huecos de seguridad. Además, depende mucho del compilador y de cómo organice la memoria, así que puede que “funcione” en un caso y falle en otro.  
+
+- Muestra que el encapsulamiento en C++ no es una barrera física, sino solo una regla del compilador. En condiciones normales basta para proteger los datos, pero si alguien fuerza el acceso con punteros o técnicas de bajo nivel, puede saltárselo. Por eso, el encapsulamiento es más una garantía de diseño y organización, no una protección absoluta contra accesos ilegales.  
+
+- Los atributos se guardan en memoria de forma ordenada: primero los que vienen de la clase base y después los que son propios de la clase derivada. Es como si el objeto derivado llevara por dentro una copia de la clase base y, a continuación, sus propios datos.  
+
+- Cada vez que agregamos un nuevo nivel de herencia, se va apilando uno sobre otro en la memoria. Es decir, primero se guarda la parte de la clase más antigua (la base), luego la de la siguiente clase, y así sucesivamente, hasta llegar a la última derivada. El objeto final es como una cadena de bloques, donde cada nivel de herencia ocupa su espacio dentro del mismo objeto.  
+
+- El programa usa las vtables como una especie de “mapa” donde se guardan las direcciones de las funciones virtuales. Cada objeto tiene un puntero oculto (vptr) que apunta a la vtable de su clase. Así, cuando se llama a un método virtual como makeSound(), en lugar de ir directo al código, el programa consulta la vtable para saber qué versión de la función debe ejecutar (la de Dog, la de Cat, etc.).  
+
+- El impacto es muy pequeño. La diferencia es que en vez de una llamada directa a la función, se hace un paso extra: mirar en la vtable cuál función corresponde y luego ejecutarla. Esto agrega un costo mínimo, pero la ventaja es enorme porque permite flexibilidad y reutilización con el polimorfismo.  
+
+### Reflexión  
+
+#### 1
+
+- Encapsulamiento: el compilador controla el acceso con reglas (private, protected, public), pero los datos privados siguen estando en la memoria del objeto; lo que cambia es que no se puede acceder a ellos por nombre desde fuera de la clase.
+
+- Herencia: el objeto derivado guarda primero la parte de la clase base y luego sus propios atributos, formando un solo bloque en memoria.
+
+- Polimorfismo: se logra con las vtables y el puntero oculto (vptr) que cada objeto tiene, lo que permite decidir en tiempo de ejecución qué versión de un método virtual se ejecuta.
+
+
+#### 2
+- Ventajas:
+
+    - Hace el código más organizado, legible y reutilizable.
+
+    - Facilita mantener y extender programas grandes.
+
+    - El polimorfismo da mucha flexibilidad para trabajar con diferentes tipos a través de una misma interfaz.
+
+- Desventajas:
+
+    - El polimorfismo introduce un costo extra mínimo en rendimiento (consultar la vtable).
+
+    - El encapsulamiento no es una barrera absoluta, ya que se puede romper con punteros o casts inseguros.
+
+    - Con herencia múltiple o jerarquías muy profundas, el diseño se puede volver más complejo y difícil de entender.
