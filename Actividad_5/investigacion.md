@@ -107,4 +107,21 @@ quedando así.
 
     - Con herencia múltiple o jerarquías muy profundas, el diseño se puede volver más complejo y difícil de entender.
 
-### Reto:  
+### Reto:    
+La idea es crear un sistema de partículas que funcionan como “pinceladas digitales” y que reaccionan al movimiento del mouse o incluso al sonido del micrófono. Cada partícula tiene su propio estilo visual (forma, color, velocidad), y usando herencia y polimorfismo se pueden generar diferentes tipos:
+
+Partícula básica: un círculo que se mueve de manera aleatoria.
+
+Partícula luminosa: parte de la básica, pero se dibuja con brillo y deja rastros.
+
+Partícula geométrica: en lugar de círculos, genera polígonos que van cambiando.
+
+Con el encapsulamiento, puedo controlar mejor las propiedades de cada partícula (posición, velocidad, color), y gracias al polimorfismo puedo guardar todas en un mismo vector, aunque cada una tenga su propio comportamiento al dibujarse y actualizarse.
+
+En otras palabras encapsulo (pos, velocidad, color) las propiedades de cada partícula para que no se modifiquen directamente, sino solo a través de métodos (setPos(), getPos()) para mantener orden y seguridad en el código.  
+
+Luego uso herencia para no repetir el codigo. Cada nueva partícula toma lo básico de la clase principal y solo agrego lo que cambio asi: "particle" es la clase base  que es la que hace que e circulo se mueva, "ParticleLuminosa" (hereda de Particle) hace que se agregue brillo  y estelas y por ultimo "ParticleGeometrica" (hereda de Particle) que dibuja formas cambiantes.
+
+Y el polimorfismo me va a permitir manejar todas las partículas en un mismo contenedor, pero que cada una responda con su propio comportamiento. osea todas estan en un mismo vector  pero por ejemplo al llamar a "draw()", cada una se dibuja distinto 
+
+Con relacion a la memoria, cada partícula ocupa espacio en memoria por sus datos, pero el comportamiento (métodos) se organiza con punteros virtuales para que se ejecute el correcto según el tipo de objeto. Así los datos (pos, velocidad, color) se guardan en memoria dentro de cada objeto, los métodos no se duplican, se guardan en la sección de código y cada objeto sabe a qué método llamar y con vtables, el programa sabe cuál draw() ejecutar dependiendo del tipo real de partícula o aplico el polimorfismo dinámico 
