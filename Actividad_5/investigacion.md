@@ -2,15 +2,16 @@
 ![alt text](image-1.png)  
 - La clase Particle representa el plano o el molde de una partícula. Ahí defino qué datos va a tener (en este caso x e y, que son su posición) y qué puede hacer (como el método move para moverse). No es un objeto en sí, sino la plantilla que me permite crear muchos objetos Particle, cada uno con sus propios valores de x e y, pero todos compartiendo el mismo comportamiento.  
 
-![alt text](image-2.png)
 - En mi clase Particle, los atributos x e y representan el estado o la posición de la partícula. Los métodos son las funciones que interactúan directamente con esos atributos: algunos los leen y otros los modifican.
-Por ejemplo, el método move(dx, dy) usa el valor actual de x e y y les suma los desplazamientos para cambiar la posición de la partícula. Es decir, los métodos se encargan de transformar o consultar el estado que guardan los atributos.
+Por ejemplo, el método move(dx, dy) usa el valor actual de x e y y les suma los desplazamientos para cambiar la posición de la partícula. Es decir, los métodos se encargan de transformar o consultar el estado que guardan los atributos.  
+
+![alt text](image-2.png)   
 
 - Sí, al imprimir las direcciones de p1.x y p1.y me doy cuenta de que están uno al lado del otro en memoria. Los atributos se guardan de forma contigua en memoria (aunque puede haber pequeños espacios de alineación).
 
 - El tamaño del objeto refleja la suma de sus atributos más cualquier relleno interno que agregue el compilador.  
 
-
+![alt text](image.png)  
 
 - Los datos estáticos no afectan a la instancia en si porque no pertenecen a cada objeto, sino que se guardan una sola vez en la clase (espacio global compartido).
 
@@ -22,14 +23,19 @@ Por ejemplo, el método move(dx, dy) usa el valor actual de x e y y les suma los
 
 - Los atributos influyen en el tamaño porque cada objeto necesita espacio para guardar sus propios valores. En cambio, los métodos no afectan el tamaño del objeto, ya que son funciones compartidas por todas las instancias y no se guardan dentro de cada una. 
 
-### Conclusión 
-Entendí que el tamaño de un objeto depende de sus atributos, mientras que los métodos no ocupan espacio dentro de él. Esto me muestra que al diseñar clases debo pensar bien qué datos realmente necesita guardar cada instancia y qué puedo manejar como estático o compartido para no desperdiciar memoria.
+### Conclusión   
+Entendí que el tamaño de un objeto depende de sus atributos, mientras que los métodos no ocupan espacio dentro de él. Esto me muestra que al diseñar clases debo pensar bien qué datos realmente necesita guardar cada instancia y qué puedo manejar como estático o compartido para no desperdiciar memoria. Además, al crear instancias como p1 y p2 vi que cada una se almacena en una dirección distinta, lo que confirma que son espacios independientes en memoria. También comprobé que el tamaño de Particle es de 8 bytes, correspondientes a los 4 bytes de x y los 4 de y. Al imprimir las direcciones de estos atributos, noté que se guardan de forma consecutiva en memoria, separados justamente por 4 bytes. Esto refuerza la idea de que los objetos son bloques de memoria que solo contienen datos, mientras que los métodos permanecen compartidos para todas las instancias.  
 
 ## Sesion 2    
+
+![alt text](image-3.png)  
+
 - Cuando una clase tiene métodos virtuales, cada objeto guarda un puntero extra que apunta a la tabla de funciones virtuales (vtable). Eso hace que el objeto ocupe un poco más de memoria que uno sin métodos virtuales.
 - Las vtables son las que permiten que el programa sepa qué versión de un método debe ejecutar en tiempo de ejecución. Gracias a ellas, si llamo a display() desde un puntero a Base, el programa decide si usar la función de Base o la de Derived, haciendo posible el polimorfismo.  
 
 - No son lo mismo. La vtable la crea el compilador para las funciones virtual y cada objeto tiene un puntero oculto (vptr) a esa tabla; eso permite el polimorfismo automático. El funcPtr de la clase es un miembro explícito que tú asignas y controlas manualmente. Ambos contienen direcciones de funciones, pero la vtable es un mecanismo del compilador para despacho dinámico, mientras que un puntero a función es solo un dato del objeto que puede apuntar a cualquier función compatible. (Ojo: hay también los pointer-to-member que funcionan distinto; aquí usamos un puntero a función estática, que es más simple.)  
+
+![alt text](image-4.png)  
 
 - Llamar por un puntero a función o por una función virtual añade una indirección: en vez de una llamada directa, se tiene que cargar una dirección y saltar a ella. Eso impide que el compilador haga inlining y tiene un coste pequeño (una carga y un salto indirecto). En llamadas aisladas no es mucho problema, pero en bucles muy calientes puede notarse. La ventaja es la flexibilidad (puedes cambiar el comportamiento en tiempo de ejecución), así que es un trade-off entre rendimiento y diseño.  
 
@@ -41,7 +47,13 @@ Entendí que el tamaño de un objeto depende de sus atributos, mientras que los 
 
 
 ## Sesion 3  
+![alt text](image-5.png)  
+Me aparece este error y luego lo intente arreglar  
+![alt text](image-6.png)    
+quedando así. 
 
+
+![alt text](image-7.png)
 - El encapsulamiento es básicamente ocultar los detalles internos de una clase y controlar qué puede ver y usar el código externo. Su propósito es organizar mejor el programa, evitar que cualquiera modifique directamente los datos internos y obligar a usar métodos definidos (getters/setters o funciones) para interactuar con esos datos.
 
 - Porque así se asegura que los datos se usen de la forma correcta. Si cualquiera pudiera cambiarlos desde afuera, sería muy fácil cometer errores, romper la lógica del programa o dejar el sistema en un estado incorrecto. Restringir el acceso da más control y hace el código más seguro y fácil de mantener.  
@@ -54,9 +66,14 @@ Entendí que el tamaño de un objeto depende de sus atributos, mientras que los 
 
 - Muestra que el encapsulamiento en C++ no es una barrera física, sino solo una regla del compilador. En condiciones normales basta para proteger los datos, pero si alguien fuerza el acceso con punteros o técnicas de bajo nivel, puede saltárselo. Por eso, el encapsulamiento es más una garantía de diseño y organización, no una protección absoluta contra accesos ilegales.  
 
+![alt text](image-8.png)  
+
 - Los atributos se guardan en memoria de forma ordenada: primero los que vienen de la clase base y después los que son propios de la clase derivada. Es como si el objeto derivado llevara por dentro una copia de la clase base y, a continuación, sus propios datos.  
 
-- Cada vez que agregamos un nuevo nivel de herencia, se va apilando uno sobre otro en la memoria. Es decir, primero se guarda la parte de la clase más antigua (la base), luego la de la siguiente clase, y así sucesivamente, hasta llegar a la última derivada. El objeto final es como una cadena de bloques, donde cada nivel de herencia ocupa su espacio dentro del mismo objeto.  
+- Cada vez que agregamos un nuevo nivel de herencia, se va apilando uno sobre otro en la memoria. Es decir, primero se guarda la parte de la clase más antigua (la base), luego la de la siguiente clase, y así sucesivamente, hasta llegar a la última derivada. El objeto final es como una cadena de bloques, donde cada nivel de herencia ocupa su espacio dentro del mismo objeto.
+
+![alt text](image-9.png)
+
 
 - El programa usa las vtables como una especie de “mapa” donde se guardan las direcciones de las funciones virtuales. Cada objeto tiene un puntero oculto (vptr) que apunta a la vtable de su clase. Así, cuando se llama a un método virtual como makeSound(), en lugar de ir directo al código, el programa consulta la vtable para saber qué versión de la función debe ejecutar (la de Dog, la de Cat, etc.).  
 
@@ -89,3 +106,5 @@ Entendí que el tamaño de un objeto depende de sus atributos, mientras que los 
     - El encapsulamiento no es una barrera absoluta, ya que se puede romper con punteros o casts inseguros.
 
     - Con herencia múltiple o jerarquías muy profundas, el diseño se puede volver más complejo y difícil de entender.
+
+### Reto:  
