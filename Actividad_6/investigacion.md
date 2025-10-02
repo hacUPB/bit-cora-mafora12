@@ -185,3 +185,5 @@ Cada partícula puede cambiar de estado con setState(new AttractState()) cuando 
 | **Observer** | Hace que todas las partículas escuchen los eventos del `ofApp` y cambien de estado al mismo tiempo. |
 | **Factory** | Crea partículas de diferentes tipos ya configuradas (estrella, estrella fugaz, planeta). |
 | **State** | Cambia el comportamiento de cada partícula según su modo (normal, atraer, repeler, detener). |
+
+## Experimentos 
