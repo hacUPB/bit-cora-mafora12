@@ -1,5 +1,7 @@
 # Sesión 2  
-## Observer  
+## Observer    
+![alt text](image.png)  
+
 se encuentra en el ofapp.h:  
 ```
 class Observer {                                  
@@ -184,6 +186,67 @@ Cada partícula puede cambiar de estado con setState(new AttractState()) cuando 
 | --- | --- |
 | **Observer** | Hace que todas las partículas escuchen los eventos del `ofApp` y cambien de estado al mismo tiempo. |
 | **Factory** | Crea partículas de diferentes tipos ya configuradas (estrella, estrella fugaz, planeta). |
-| **State** | Cambia el comportamiento de cada partícula según su modo (normal, atraer, repeler, detener). |
+| **State** | Cambia el comportamiento de cada partícula según su modo (normal, atraer, repeler, detener). |  
 
 ## Experimentos 
+Hice algunas modificaciones como:  
+- se agrego en "ParticleFactory::createParticle()" dentro de ofApp.cpp.
+
+``` 
+else if (type == "comet") {
+    particle->size = ofRandom(4, 7);
+    particle->color = ofColor(255, 100, 0); // tono naranja brillante
+    particle->velocity *= 4; // mucho más rápida
+}
+``` 
+La particula se mueve más rápido que las demás y tiene un color cálido que simula una estela.
+
+- Crear esta clase dentro de ofApp.h, junto a los demás estados.  
+``` 
+class TurbulentState : public State {
+public:
+    void update(Particle* particle) override {
+        particle->velocity.x += ofRandom(-0.5, 0.5);
+        particle->velocity.y += ofRandom(-0.5, 0.5);
+        particle->position += particle->velocity;
+        particle->color = ofColor(ofRandom(100,255), ofRandom(100,255), ofRandom(100,255)); 
+    }
+};
+```   
+y para que funcionse, se agrega en el método onNotify() de Particle:   
+``` 
+else if (event == "turbulent") {
+    setState(new TurbulentState());
+}
+``` 
+Cada partícula cambia su dirección y color constantemente, creando un efecto caótico y colorido
+
+- hacer que las partículas en estado normal giren un poco.
+``` 
+particle->position += particle->velocity;
+particle->velocity.rotate(ofRandom(-2, 2)); // movimiento más orgánico
+``` 
+Ahora las partículas no se mueven en línea recta, sino que hacen un movimiento suave de espiral, más natural y estético.
+
+- Por último se genero un nuevo evento para las partículas: “explode”
+``` 
+else if (key == 'e') {
+    notify("explode");
+}
+``` 
+``` 
+else if (event == "explode") {
+    velocity *= 5;
+    color = ofColor(255, 50, 50);
+}
+``` 
+Cuando presionas la tecla "e", las partículas salen disparadas en todas direcciones y se tiñen de rojo, simulando una explosión 
+
+### Codigo  
+- .h:
+![alt text](image-3.png)
+
+- .cpp:
+![alt text](image-1.png)
+![alt text](image-2.png)
+
