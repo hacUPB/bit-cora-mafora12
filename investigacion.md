@@ -48,3 +48,9 @@ Un espacio en la memoria donde se guarda la imagen ya renderizada, lista para mo
 
 ### ¿Para qué se usa el Z-buffer o depth buffer en el render pipeline?  
 Este buffer almacena la profundidad de cada píxel, para que el sistema sepa qué objetos están más cerca o más lejos. Así se evita que algo que está al fondo tape lo que está adelante.  
+
+### Reflexión   
+Después de ver el segundo video, entendí que la GPU tiene que ser tan rápida y trabajar de forma paralela porque en cada segundo debe procesar millones o incluso billones de cálculos para crear las imágenes que vemos en pantalla. Cada cuadro de un videojuego tiene miles de triángulos, luces, sombras y texturas que deben calcularse al mismo tiempo.  
+Por eso la GPU no trabaja como un procesador normal (que hace una tarea a la vez), sino que tiene miles de núcleos que pueden ejecutar muchas operaciones al mismo tiempo, logrando que todo el proceso sea fluido y que los gráficos se vean en movimiento sin pausas ni retrasos.  
+
+
