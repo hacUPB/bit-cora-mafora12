@@ -53,4 +53,38 @@ Este buffer almacena la profundidad de cada píxel, para que el sistema sepa qu�
 Después de ver el segundo video, entendí que la GPU tiene que ser tan rápida y trabajar de forma paralela porque en cada segundo debe procesar millones o incluso billones de cálculos para crear las imágenes que vemos en pantalla. Cada cuadro de un videojuego tiene miles de triángulos, luces, sombras y texturas que deben calcularse al mismo tiempo.  
 Por eso la GPU no trabaja como un procesador normal (que hace una tarea a la vez), sino que tiene miles de núcleos que pueden ejecutar muchas operaciones al mismo tiempo, logrando que todo el proceso sea fluido y que los gráficos se vean en movimiento sin pausas ni retrasos.  
 
+## Actividad 2  
+### ¿Cómo funciona?  
+El shader se encarga de dibujar un rectángulo en pantalla, pero en lugar de usar el color que yo le doy con ofSetColor, calcula el color directamente desde la GPU. Cuando activo el shader (shader.begin()), cada píxel cambia su color dependiendo de su posición en la ventana, creando un degradado.  
 
+### ¿Qué resultados obtuviste?   
+Al ejecutar el código con el shader activo, obtuve un degradado de colores donde el tono magenta aumenta de izquierda a derecha y el azul aumenta de abajo hacia arriba, mientras que el blanco se mantiene fijo. En cambio, cuando comenté el shader (dejando solo ofDrawRectangle), el rectángulo se volvió completamente blanco, sin degradado. Así:  
+
+![alt text](<Imagen de WhatsApp 2025-10-20 a las 10.03.21_ae25f629.jpg>)
+y con los cambios se genero esto:  
+
+![alt text](<Imagen de WhatsApp 2025-10-20 a las 10.03.21_ae25f629-1.jpg>)  
+
+### ¿Estás usando un vertex shader?  
+Sí, estoy usando un vertex shader. El archivo se encarga de transformar la posición de los vértices del rectángulo mediante la matriz modelViewProjectionMatrix, este define dónde se dibuja cada vértice.  
+
+### ¿Estás usando un fragment shader?  
+Sí, también estoy usando un fragment shader. Este es el que calcula el color de cada píxel usando la posición del fragmento en pantalla (gl_FragCoord). Gracias a eso se genera el efecto de degradado.  
+
+### Analiza el código de los shaders. ¿Qué hace cada uno?
+- Vertex Shader:  
+Este shader toma la posición de cada vértice y la multiplica por la matriz de transformación para ubicar el rectángulo correctamente en la pantalla. No pinta nada, solo define la posición.  
+
+- Fragment Shader:  
+Este shader usa las coordenadas de cada fragmento para calcular su color. Divide la posición x y y por el ancho y alto de la ventana para obtener valores entre 0 y 1, generando un degradado de color según la ubicación en pantalla.  
+
+Si seguimos con el tutorial, estas son las evidencias:
+
+### Añadiendo uniformes  
+![alt text](<Imagen de WhatsApp 2025-10-20 a las 10.12.16_de934ef9.jpg>)
+
+Si comento las lineas "shader.begin() y shader.end()", crea esto:   
+
+![alt text](<Imagen de WhatsApp 2025-10-20 a las 10.14.02_eff8eb4f.jpg>)  
+y si le añado algo de interactividad me crea esto:  
+![alt text](<Imagen de WhatsApp 2025-10-20 a las 10.16.52_2a850da8.jpg>)  
