@@ -77,21 +77,31 @@ Este shader toma la posición de cada vértice y la multiplica por la matriz de 
 
 - Fragment Shader:  
 Este shader usa las coordenadas de cada fragmento para calcular su color. Divide la posición x y y por el ancho y alto de la ventana para obtener valores entre 0 y 1, generando un degradado de color según la ubicación en pantalla.  
+## Actividad 3  
+### ¿Qué es un uniform?   
+Un uniform es una variable que se envía desde la aplicación hacia los shaders y que mantiene el mismo valor para todos los vértices o píxeles mientras se dibuja una figura.
+Sirve para pasar información que no cambia dentro del mismo dibujo, como el tiempo, el color o la posición del mouse.
+Por ejemplo, cuando en la app se usa shader.setUniform1f("time", ofGetElapsedTimef());, ese valor del tiempo llega al shader para que este lo use en una animación o efecto.   
 
-Si seguimos con el tutorial, estas son las evidencias:
+### ¿Cómo funciona el código, los shaders y su comunicación?
+El código se encarga de crear los objetos, definir sus tamaños, colores y animaciones. Luego activa el shader con shader.begin() y le envía datos a través de uniforms.
 
-### Añadiendo uniformes  
+El vertex shader recibe esos datos y modifica la posición de los vértices. Por ejemplo, usa una función sin() junto con el tiempo para crear un efecto de onda en el plano. Después, el fragment shader se encarga de pintar cada píxel, usando el color que le envía la aplicación con ofSetColor() o el uniform globalColor.
+En conjunto, la app y los shaders se comunican constantemente: la app envía los valores y la GPU los usa para generar animaciones o efectos visuales en tiempo real.
+
 ![alt text](<Imagen de WhatsApp 2025-10-20 a las 10.12.16_de934ef9.jpg>)
 
 Si comento las lineas "shader.begin() y shader.end()", crea esto:   
 
 ![alt text](<Imagen de WhatsApp 2025-10-20 a las 10.14.02_eff8eb4f.jpg>)  
+
+### Cambio colores  
+<img width="1914" height="1031" alt="image" src="https://github.com/user-attachments/assets/d4516836-8fda-4791-b22e-713ba80e4269" />  
+se hizo el cambio de estas lineas en el ofApp.cpp:  
+````
+	ofColor colorLeft = ofColor::royalBlue;
+	ofColor colorRight = ofColor::paleVioletRed;  
+````  
+
 y si le añado algo de interactividad me crea esto:  
 ![alt text](<Imagen de WhatsApp 2025-10-20 a las 10.16.52_2a850da8.jpg>)  
-
-### Texturas  
-Resultado, 
-![alt text](image.png)
-
-EL resultado con alfas 
-![alt text](image-1.png)
