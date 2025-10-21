@@ -88,3 +88,10 @@ Si comento las lineas "shader.begin() y shader.end()", crea esto:
 ![alt text](<Imagen de WhatsApp 2025-10-20 a las 10.14.02_eff8eb4f.jpg>)  
 y si le añado algo de interactividad me crea esto:  
 ![alt text](<Imagen de WhatsApp 2025-10-20 a las 10.16.52_2a850da8.jpg>)  
+
+### Texturas  
+Resultado, 
+![alt text](image.png)
+
+EL resultado con alfas 
+![alt text](image-1.png)
