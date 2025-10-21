@@ -81,7 +81,7 @@ Este shader usa las coordenadas de cada fragmento para calcular su color. Divide
 ### ¿Qué es un uniform?   
 Un uniform es una variable que se envía desde la aplicación hacia los shaders y que mantiene el mismo valor para todos los vértices o píxeles mientras se dibuja una figura.
 Sirve para pasar información que no cambia dentro del mismo dibujo, como el tiempo, el color o la posición del mouse.
-Por ejemplo, cuando en la app se usa shader.setUniform1f("time", ofGetElapsedTimef());, ese valor del tiempo llega al shader para que este lo use en una animación o efecto.   
+Por ejemplo, cuando en la app se usa "shader.setUniform1f("time", ofGetElapsedTimef());", ese valor del tiempo llega al shader para que este lo use en una animación o efecto.   
 
 ### ¿Cómo funciona el código, los shaders y su comunicación?
 El código se encarga de crear los objetos, definir sus tamaños, colores y animaciones. Luego activa el shader con shader.begin() y le envía datos a través de uniforms.
@@ -91,17 +91,45 @@ En conjunto, la app y los shaders se comunican constantemente: la app envía los
 
 ![alt text](<Imagen de WhatsApp 2025-10-20 a las 10.12.16_de934ef9.jpg>)
 
-Si comento las lineas "shader.begin() y shader.end()", crea esto:   
+Si comento las lineas "shader.begin() y shader.end()", crea esto:
 
-![alt text](<Imagen de WhatsApp 2025-10-20 a las 10.14.02_eff8eb4f.jpg>)  
+![alt text](<Imagen de WhatsApp 2025-10-20 a las 10.14.02_eff8eb4f.jpg>)    
+Porque la app tiene que activar el shader con shader.begin() y luego cerrarlo con shader.end(). Mientras esas líneas están activas, todo lo que se dibuja entre ellas pasa por el shader, que modifica la posición de los vértices y genera la animación, asi, si la comento, el plano se dibuja directamente sin pasar por el shader, o sea, la GPU ya no aplica las deformaciones y por eso el plano se queda quieto.  
 
 ### Cambio colores  
 <img width="1914" height="1031" alt="image" src="https://github.com/user-attachments/assets/d4516836-8fda-4791-b22e-713ba80e4269" />  
-se hizo el cambio de estas lineas en el ofApp.cpp:  
-````
-	ofColor colorLeft = ofColor::royalBlue;
-	ofColor colorRight = ofColor::paleVioletRed;  
-````  
+se hizo el cambio de estas lineas en el ofApp.cpp:   
 
-y si le añado algo de interactividad me crea esto:  
-![alt text](<Imagen de WhatsApp 2025-10-20 a las 10.16.52_2a850da8.jpg>)  
+```  
+	ofColor colorLeft = ofColor::royalBlue;  
+	ofColor colorRight = ofColor::paleVioletRed;   
+```  
+
+
+## Actividad 4    
+### ¿Qué hace el código del ejemplo?  
+El código crea un plano (plane) en el centro de la pantalla y permite que los vértices se muevan dependiendo de la posición del ratón. Cuando el cursor se acerca, los vértices se alejan de él, creando un efecto de repulsión; Además, el color del plano cambia de magenta a azul según la posición horizontal del mouse.  
+Todo esto se logra enviando tres uniforms distintos al shader:  
+- mouseRange → define el rango de acción del ratón (qué tan lejos afecta a los vértices).
+- mousePos → envía la posición del ratón en X y Y.  
+- mouseColor → cambia el color dependiendo de dónde esté el mouse.
+
+![alt text](<Imagen de WhatsApp 2025-10-20 a las 10.16.52_2a850da8.jpg>)   
+
+### ¿Cómo funciona el código de aplicación, los shaders y cómo se comunican?  
+El código de aplicación (ofApp.cpp) calcula la posición del ratón (mouseX, mouseY) y la ajusta al centro del plano, enviando esos valores al shader usando funciones como:  
+```  
+shader.setUniform1f("mouseRange", 150);
+shader.setUniform2f("mousePos", mx, my);
+shader.setUniform4fv("mouseColor", &mouseColor[0]);
+```    
+Luego dibuja el plano con plane.drawWireframe() entre shader.begin() y shader.end() para que los shaders puedan aplicar sus efectos.  
+
+#### Vertex Shader (sombreador de vértices):
+Recibe los uniforms enviados desde la app, calcula la distancia entre cada vértice y la posición del ratónm, si el vértice está dentro del rango (mouseRange), lo desplaza alejándolo del mouse, generando ese movimiento de “repulsión” y finalmente, actualiza la posición del vértice con gl_Position.
+
+#### Fragment Shader (sombreador de fragmentos):
+Recibe el color del ratón (mouseColor) y lo aplica a cada píxel del plano así, el color cambia dinámicamente a medida que el mouse se mueve de un lado al otro.
+
+### Comunicación entre ellos:
+La app (CPU), envía los valores con uniforms, pata que el shader de vértices(GPU,) use esos valores para mover los vértices y el shader de fragmentos(GPU), use los valores para definir el color.
