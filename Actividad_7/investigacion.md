@@ -133,3 +133,10 @@ Recibe el color del ratón (mouseColor) y lo aplica a cada píxel del plano así
 
 ### Comunicación entre ellos:
 La app (CPU), envía los valores con uniforms, pata que el shader de vértices(GPU,) use esos valores para mover los vértices y el shader de fragmentos(GPU), use los valores para definir el color.
+### Cambios en el .cpp y en el .vert
+![alt text](image-3.png)  
+Ahora los vértices se “atraen” hacia el cursor, en lugar de repelerse y agrande el rango de vertices que se asercan al cursor 
+
+### Cambios en el .frag  
+<video controls src="20251022-1715-18.8557959.mp4" title="Title"></video>
+En este caso cambie la dinamica de color y ahora respira y cada que muevo el mause cambia de color.
