@@ -61,9 +61,9 @@ El shader se encarga de dibujar un rectángulo en pantalla, pero en lugar de usa
 Al ejecutar el código con el shader activo, obtuve un degradado de colores donde el tono magenta aumenta de izquierda a derecha y el azul aumenta de abajo hacia arriba, mientras que el blanco se mantiene fijo. En cambio, cuando comenté el shader (dejando solo ofDrawRectangle), el rectángulo se volvió completamente blanco, sin degradado. Así:  
 
 ![alt text](<Imagen de WhatsApp 2025-10-20 a las 10.03.21_ae25f629.jpg>)
-y con los cambios se genero esto:  
+y con los cambios se genero esto:    
+![alt text](image-8.png)
 
-![alt text](<Imagen de WhatsApp 2025-10-20 a las 10.03.21_ae25f629-1.jpg>)  
 
 ### ¿Estás usando un vertex shader?  
 Sí, estoy usando un vertex shader. El archivo se encarga de transformar la posición de los vértices del rectángulo mediante la matriz modelViewProjectionMatrix, este define dónde se dibuja cada vértice.  
