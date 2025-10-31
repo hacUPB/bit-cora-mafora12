@@ -4,7 +4,7 @@ Para este reto implementé la únion de las actividades anteriores implemntando 
 La idea principal es generar un plano en movimiento tipo onda, que reacciona a la posición del mouse y cambia sus colores de forma dinámica.
 El plano se centra en la ventana y se deforma visualmente con un efecto de onda que se anima con el tiempo, mientras el color se modifica dependiendo de la posición del mouse en el eje X.
 
-## Explicación detallada del funcioname¿iento del reto   
+## Explicación detallada del funcionameiento del reto   
 Mi aplicación es una escena interactiva hecha en C++ con openFrameworks, donde uso shaders para crear movimiento y color que cambian en tiempo real. Básicamente, el vertex shader se encarga de deformar el plano, y el fragment shader cambia los colores dependiendo del movimiento del mouse y del tiempo.
 
 Cuando se inicia el programa, se carga el shader que corresponde según el tipo de renderizador y se crea un plano que cubre toda la ventana. Ese plano tiene una malla con muchos vértices que luego se van a mover con el shader. Durante la ejecución, el programa calcula la posición del mouse en relación al centro de la pantalla y le envía esa información al shader, junto con el tiempo que lleva corriendo, el rango de acción del mouse y el ancho de la pantalla. Gracias a eso, todo se actualiza de forma interactiva.
