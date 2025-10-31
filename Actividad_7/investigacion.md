@@ -140,3 +140,4 @@ Ahora los vértices se “atraen” hacia el cursor, en lugar de repelerse y agr
 ### Cambios en el .frag  
 <video controls src="20251022-1715-18.8557959.mp4" title="Title"></video>
 En este caso cambie la dinamica de color y ahora respira y cada que muevo el mause cambia de color.
+
